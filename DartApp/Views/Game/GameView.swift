@@ -15,8 +15,8 @@ struct GameView: View {
     @State private var inputText = ""
     @State private var selectedNumber: Int?
     
-    @State private var letzterWurfSpieler1 = 0
-    @State private var letzterWurfSpieler2 = 0
+    @State private var letzterWurfSpieler1: Array = [0]
+    @State private var letzterWurfSpieler2: Array = [0]
     
     @State private var currentPlayerIsOne = true
     
@@ -27,8 +27,8 @@ struct GameView: View {
     @State private var darts1 = 0
     @State private var darts2 = 0
     
-    @State private var avg1: Float = 0
-    @State private var avg2: Float = 0
+    @State private var avg1: Array = [0]
+    @State private var avg2: Array = [0]
     
     @State private var double1 = 0.0
     @State private var double2 = 0.0
@@ -68,10 +68,11 @@ struct GameView: View {
                     }
                     Text("Score:  \(score1)")
                         .bold()
-                                      
-                    Text("Letzter Wurf: " + String(letzterWurfSpieler1))
+                          
+                    
+                    Text("Letzter Wurf: " + String(letzterWurfSpieler1.last!))
                         
-                    Text("Avg.: " + String(avg1))
+                    Text("Avg.: " + String(avg1.last!))
                     
                     Text("Darts: " + String(darts1))
                     
@@ -104,9 +105,9 @@ struct GameView: View {
                     Text("Score:  \(score2)")
                         .bold()
                                       
-                    Text("Letzter Wurf: " + String(letzterWurfSpieler2))
+                    Text("Letzter Wurf: " + String(letzterWurfSpieler2.last!))
                         
-                    Text("Avg.: " + String(avg2))
+                    Text("Avg.: " + String(avg2.last!))
                     
                     Text("Darts: " + String(darts2))
                     
@@ -144,6 +145,20 @@ struct GameView: View {
                 HStack {
                     Button(action: {
                         // Aktion für die Rückgängig Taste (Vorige Eingabe wird gelöscht)
+                        if currentPlayerIsOne{
+                            score2 += letzterWurfSpieler2.last!
+                            letzterWurfSpieler2.removeLast()
+                            darts2 -= 3 // Einfügen, dass er schaut wie viele darts beim letzten Wurf geworfen wurden
+                            avg2.removeLast()
+                            
+                        } else{  // anders herum weil das ja nur geht wenn der andere Spieler dran ist
+                            score1 += letzterWurfSpieler1.last!
+                            letzterWurfSpieler1.removeLast()
+                            darts1 -= 3 // Einfügen wie oben
+                            avg1.removeLast()
+                        }
+                        currentPlayerIsOne.toggle()
+                        
                     }) {
                         Image(systemName: "arrow.uturn.left")
                             .font(.title)
@@ -152,6 +167,7 @@ struct GameView: View {
                             .background(Color.gray)
                             .cornerRadius(10)
                     }
+                    .padding(.horizontal, 13)
                     
                     
                     Text(inputText) // Anzeige der eingegebenen Zahl
@@ -167,13 +183,12 @@ struct GameView: View {
                             let inputScore = Int(inputText)!
                             if inputScore <= score1 {
                                 // Gültige Eingabe: Score aktualisieren
-                                if istCheckbar(score1) {
-                                                   showActionSheet = true
-                                               }
+                                
                                 score1 -= inputScore
-                                letzterWurfSpieler1 = inputScore
+                                letzterWurfSpieler1.append(inputScore)
                                 darts1 += 3
-                                avg1 = Float((startScore-score1))/Float(darts1)*3
+                                let avgNeu = Float((startScore-score1)/darts1*3)
+                                avg1.append(Int(avgNeu))
                                 
                             } else {    // Ungültige Eingabe: Score ist zu hoch
                                 print("Fehler")
@@ -193,9 +208,11 @@ struct GameView: View {
                                                    showActionSheet = true
                                                }
                                 score2 -= inputScore
-                                letzterWurfSpieler2 = inputScore
+                                letzterWurfSpieler2.append(inputScore)
                                 darts2 += 3
-                                avg2 = Float((startScore-score2))/Float(darts2)*3
+                                
+                                let avgNeu = Float((startScore-score1)/darts1*3)
+                                avg2.append(Int(avgNeu))
                                 
                             } else {    // Ungültige Eingabe: Score ist zu hoch
                                 print("Fehler")
@@ -215,7 +232,7 @@ struct GameView: View {
                             .background(Color.green)
                             .cornerRadius(10)
                     }
-                    
+                    .padding(.horizontal, 13)
                     
                 }
                 .padding(.horizontal, 17)
@@ -265,6 +282,17 @@ struct GameView: View {
                                                 }                                    }
                                 } else if number == -1 {
                                     // Aktion für die BUST-Taste
+                                    
+                                    if currentPlayerIsOne{
+                                        letzterWurfSpieler1.append(0)
+                                        darts1 += 3
+                                    } else{
+                                        letzterWurfSpieler2.append(0)
+                                        darts2 += 3
+                                    } // Einfügen, dass man eingeben kann wie viele Darts geworfen wurden vor dem Bust
+                                    
+                                    currentPlayerIsOne.toggle()
+                                    
                                     
                                     //Input ist 0 Abfrage wie viele Würfe gebraucht wurden
                                     
