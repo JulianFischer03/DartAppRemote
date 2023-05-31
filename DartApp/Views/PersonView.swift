@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PersonView: View {
     var body: some View {
-        Text("Hello, Person!")
+        Text("Hello, Person! Hier kommt die Anmeldungs Seite hin!")
     }
 }
 
