@@ -211,7 +211,7 @@ struct GameView: View {
                                 letzterWurfSpieler2.append(inputScore)
                                 darts2 += 3
                                 
-                                let avgNeu = Float((startScore-score1)/darts1*3)
+                                let avgNeu = Float((startScore-score2)/darts2*3)
                                 avg2.append(Int(avgNeu))
                                 
                             } else {    // Ungültige Eingabe: Score ist zu hoch
