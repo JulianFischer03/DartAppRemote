@@ -24,14 +24,23 @@ struct GameView: View {
     @State private var score2 = 0
     @State private var startScore = 0
     
+    @State private var legs1 = 0
+    @State private var legs2 = 0
+    
+    @State private var sets1 = 0
+    @State private var sets2 = 0
+    
+    @State private var legsToSet = 0
+    @State private var setsToWin = 0
+    
     @State private var darts1 = 0
     @State private var darts2 = 0
     
     @State private var avg1: Array = [0]
     @State private var avg2: Array = [0]
     
-    @State private var double1 = 0.0
-    @State private var double2 = 0.0
+    @State private var double1 = 0
+    @State private var double2 = 0
     
     @State private var würfeAufDoppel1 = 0
     @State private var würfeAufDoppel2 = 0
@@ -57,6 +66,28 @@ struct GameView: View {
         
         VStack{
             
+            VStack{
+                
+                if gameSettings.spielArt == 1 {
+                    Text("Gewählter Spielmodus: Best Of")
+                } else {
+                    Text("Gewählter Spielmodus: First To")
+                }
+                Text("Legs zum Set: " + String(legsToSet))
+                Text("Sets zum Sieg: " + String(setsToWin))
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 4)
+            .frame(maxWidth: .infinity)
+            .background(
+                    RoundedRectangle(cornerRadius: 6, style: .continuous)
+                        .fill(Color.white)
+                        .shadow(radius: 2)
+                )
+            
+            .padding(.vertical)
+            
+            
             HStack{
                 VStack{         //Spieler 1 Anzeige
                     HStack{
@@ -68,7 +99,10 @@ struct GameView: View {
                     }
                     Text("Score:  \(score1)")
                         .bold()
-                          
+                     
+                    Text("Legs: " + String(legs1))
+                    
+                    Text("Sets: " + String(sets1))
                     
                     Text("Letzter Wurf: " + String(letzterWurfSpieler1.last!))
                         
@@ -76,7 +110,7 @@ struct GameView: View {
                     
                     Text("Darts: " + String(darts1))
                     
-                    Text("Double: " + String(würfeAufDoppel1) + "%")
+                  //  Text("Double:   \(double1)" + "/" + String(würfeAufDoppel1))
                     
                 }
                 .padding(.horizontal, 10)
@@ -104,14 +138,18 @@ struct GameView: View {
                     }
                     Text("Score:  \(score2)")
                         .bold()
-                                      
+                    
+                    Text("Legs: " + String(legs2))
+                    
+                    Text("Sets: " + String(sets2))
+                    
                     Text("Letzter Wurf: " + String(letzterWurfSpieler2.last!))
                         
                     Text("Avg.: " + String(avg2.last!))
                     
                     Text("Darts: " + String(darts2))
                     
-                    Text("Double: " + String(würfeAufDoppel2) + "%")
+                   // Text("Double: " + String(double2) + "/" + String(würfeAufDoppel2))
                     
                 }
                 .padding(.horizontal, 10)
@@ -133,6 +171,14 @@ struct GameView: View {
                         score1 = gameSettings.punkteHöhe
                         score2 = gameSettings.punkteHöhe
                         startScore = gameSettings.punkteHöhe
+                
+                if gameSettings.spielArt == 1 {     //Spielart = Best of
+                    legsToSet = gameSettings.legs / 2 + 1
+                    setsToWin = gameSettings.sets / 2 + 1
+                } else {    //Spielart = First To
+                    legsToSet = gameSettings.legs
+                    setsToWin = gameSettings.sets
+                }
                     }
             
             
@@ -183,6 +229,10 @@ struct GameView: View {
                             let inputScore = Int(inputText)!
                             if inputScore <= score1 {
                                 // Gültige Eingabe: Score aktualisieren
+                                if istCheckbar(score1) {
+                                                   showActionSheet = true
+                                               }
+                                
                                 
                                 score1 -= inputScore
                                 letzterWurfSpieler1.append(inputScore)
@@ -194,8 +244,29 @@ struct GameView: View {
                                 print("Fehler")
                             }
                             if score1 == 0 {// Score von Spieler 1 ist 0: Präsentationsmodus verwenden, um zur vorherigen Ansicht zurückzukehren
-                                presentationMode.wrappedValue.dismiss()
-                                showCongratulationsPopup = true
+                                
+                                legs1 += 1
+                                double1 += 1
+                                score1 = startScore
+                                score2 = startScore
+                                darts1 = 0
+                                darts2 = 0
+                                letzterWurfSpieler1.removeAll()
+                                letzterWurfSpieler1.append(0)
+                                letzterWurfSpieler2.removeAll()
+                                letzterWurfSpieler2.append(0)
+
+                                
+                                if legs1 == legsToSet {
+                                    legs1 = 0
+                                    legs2 = 0
+                                    sets1 += 1
+                                }
+                                
+                                if sets1 == setsToWin {
+                                    presentationMode.wrappedValue.dismiss() //Gewonnen
+                                    showCongratulationsPopup = true         //Gewonnen
+                                }
                             }
                             
                             
@@ -218,10 +289,31 @@ struct GameView: View {
                                 print("Fehler")
                             }
                         }
-                        if score2 == 0 { // Score von Spieler 2 ist 0: Präsentationsmodus verwenden, um zur vorherigen Ansicht zurückzukehren
-                            presentationMode.wrappedValue.dismiss()
-                            showCongratulationsPopup = true
+                        if score2 == 0 {// Score von Spieler 1 ist 0: Präsentationsmodus verwenden, um zur vorherigen Ansicht zurückzukehren
+                            
+                            legs2 += 1
+                            double2 += 1
+                            score1 = startScore
+                            score2 = startScore
+                            darts1 = 0
+                            darts2 = 0
+                            letzterWurfSpieler1.removeAll()
+                            letzterWurfSpieler1.append(0)
+                            letzterWurfSpieler2.removeAll()
+                            letzterWurfSpieler2.append(0)
+                            
+                            if legs2 == legsToSet {
+                                legs1 = 0
+                                legs2 = 0
+                                sets2 += 1
+                            }
+                            
+                            if sets2 == setsToWin {
+                                presentationMode.wrappedValue.dismiss() //Gewonnen
+                                showCongratulationsPopup = true         //Gewonnen
+                            }
                         }
+
                         inputText = ""
                         currentPlayerIsOne.toggle()
                     }) {

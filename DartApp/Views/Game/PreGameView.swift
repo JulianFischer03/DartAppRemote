@@ -267,16 +267,16 @@ struct PreGameView: View {
                 
                 HStack(spacing: 40) {
                     VStack {
-                        Text("Sets")
+                        Text("Legs")
                             .font(.system(size: 16))
-                        Picker("", selection: $selectedSets) {
+                        Picker("", selection: $selectedLegs) {
                             ForEach(1...10, id: \.self) { number in
                                 Text("\(number)")
-                               
+                             
                             }
                         }
-                        .onChange(of: selectedSets) { newValue in
-                            gameSettings.sets = newValue}
+                        .onChange(of: selectedLegs) { newValue in
+                            gameSettings.legs = newValue}
                         .pickerStyle(MenuPickerStyle())
                         .frame(maxWidth: .infinity)
                         .padding(.horizontal, 10)
@@ -289,16 +289,16 @@ struct PreGameView: View {
                     }
                     
                     VStack {
-                        Text("Legs")
+                        Text("Sets")
                             .font(.system(size: 16))
-                        Picker("", selection: $selectedLegs) {
+                        Picker("", selection: $selectedSets) {
                             ForEach(1...10, id: \.self) { number in
                                 Text("\(number)")
-                             
+                               
                             }
                         }
-                        .onChange(of: selectedLegs) { newValue in
-                            gameSettings.legs = newValue}
+                        .onChange(of: selectedSets) { newValue in
+                            gameSettings.sets = newValue}
                         .pickerStyle(MenuPickerStyle())
                         .frame(maxWidth: .infinity)
                         .padding(.horizontal, 10)
