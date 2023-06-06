@@ -227,7 +227,7 @@ struct GameView: View {
                         // Aktion für die Bestätigungstaste
                         if currentPlayerIsOne {
                             let inputScore = Int(inputText)!
-                            if inputScore <= score1 {
+                            if inputScore <= score1 && score1 - inputScore != 1 {
                                 // Gültige Eingabe: Score aktualisieren
                                 if istCheckbar(score1) {
                                                    showActionSheet = true
@@ -273,7 +273,7 @@ struct GameView: View {
                             
                         } else {    // Ähnliche Logik für Spieler 2
                             let inputScore = Int(inputText)!
-                            if inputScore <= score2 {
+                            if inputScore <= score2 && score2 - inputScore != 1 {
                                 // Gültige Eingabe: Score aktualisieren
                                 if istCheckbar(score2) {
                                                    showActionSheet = true
