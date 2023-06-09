@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct PreGameView: View {
     
     @EnvironmentObject private var gameSettings: GameSettings
+    @EnvironmentObject private var selectedPlayer: SelectedPlayer
     
     @State private var selectedPlayer1 = "Gast1"
     @State private var selectedPlayer2 = "Gast2"
@@ -97,10 +99,10 @@ struct PreGameView: View {
                     VStack {
                         Text("Spieler 1:")
                             .font(.system(size: 16))
-                        Picker("", selection: $selectedPlayer1) {
-                            Text("Gast1").tag("Gast1")
-                            // Füge hier weitere Spieler hinzu
-                        }
+                        Picker("", selection: $selectedPlayer.player1) {
+                                Text("Gast1").tag("Gast1")
+                                Text("Du").tag("Du")
+                                        }
                         .pickerStyle(MenuPickerStyle())
                         .frame(maxWidth: .infinity)
                         .padding(.horizontal, 10)
@@ -114,10 +116,10 @@ struct PreGameView: View {
                     VStack {
                         Text("Spieler 2:")
                             .font(.system(size: 16))
-                        Picker("", selection: $selectedPlayer2) {
-                            Text("Gast2").tag("Gast2")
-                            // Füge hier weitere Spieler hinzu
-                        }
+                        Picker("", selection: $selectedPlayer.player2) {
+                                Text("Gast2").tag("Gast2")
+                                Text("Du").tag("Du")
+                                        }
                         .pickerStyle(MenuPickerStyle())
                         .frame(maxWidth: .infinity)
                         .padding(.horizontal, 10)
@@ -331,11 +333,21 @@ struct PreGameView: View {
             }// ENDE HSTACK
         }
     }
+    
+    func getLoggedInUserID() -> String? {
+        if let currentUser = Auth.auth().currentUser {
+            return currentUser.uid
+        } else {
+            return nil
+        }
+    }
+    
 }
 
 struct PreGameView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
             .environmentObject(GameSettings())
+            .environmentObject(SelectedPlayer())
     }
 }

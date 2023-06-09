@@ -6,10 +6,13 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct GameView: View {
     
     @EnvironmentObject private var gameSettings: GameSettings
+    @EnvironmentObject private var dataManager: DataManager
+    @EnvironmentObject private var selectedPlayer: SelectedPlayer
     @Environment(\.presentationMode) var presentationMode
     
     @State private var inputText = ""
@@ -95,7 +98,7 @@ struct GameView: View {
                         Image("person")
                             .resizable()
                             .frame(width: 30, height: 30)
-                        Text("Name")
+                        Text("\(selectedPlayer.player1)")
                     }
                     Text("Score:  \(score1)")
                         .bold()
@@ -134,7 +137,7 @@ struct GameView: View {
                         Image("person")
                             .resizable()
                             .frame(width: 30, height: 30)
-                        Text("Name")
+                        Text("\(selectedPlayer.player2)")
                     }
                     Text("Score:  \(score2)")
                         .bold()
@@ -228,6 +231,9 @@ struct GameView: View {
                         if currentPlayerIsOne {
                             let inputScore = Int(inputText)!
                             if inputScore <= score1 {
+                                if inputScore == 180 && selectedPlayer.player1 == "Du" {
+                                    dataManager.incrementHundertAchtziger()
+                                }
                                 // Gültige Eingabe: Score aktualisieren
                                 if istCheckbar(score1) {
                                                    showActionSheet = true
@@ -237,6 +243,9 @@ struct GameView: View {
                                 score1 -= inputScore
                                 letzterWurfSpieler1.append(inputScore)
                                 darts1 += 3
+                                if selectedPlayer.player1 == "Du"{
+                                    dataManager.incrementDarts()
+                                }
                                 let avgNeu = Float((startScore-score1)/darts1*3)
                                 avg1.append(Int(avgNeu))
                                 
@@ -275,12 +284,18 @@ struct GameView: View {
                             let inputScore = Int(inputText)!
                             if inputScore <= score2 {
                                 // Gültige Eingabe: Score aktualisieren
+                                if inputScore == 180 && selectedPlayer.player2 == "Du" {
+                                    dataManager.incrementHundertAchtziger()
+                                }
                                 if istCheckbar(score2) {
                                                    showActionSheet = true
                                                }
                                 score2 -= inputScore
                                 letzterWurfSpieler2.append(inputScore)
                                 darts2 += 3
+                                if selectedPlayer.player2 == "Du"{
+                                    dataManager.incrementDarts()
+                                }
                                 
                                 let avgNeu = Float((startScore-score2)/darts2*3)
                                 avg2.append(Int(avgNeu))
@@ -418,6 +433,14 @@ struct GameView: View {
             .padding()
         }
         
+    }
+    
+    func getLoggedInUserID() -> String? {
+        if let currentUser = Auth.auth().currentUser {
+            return currentUser.uid
+        } else {
+            return nil
+        }
     }
     
     private func handleOptionSelected(_ option: Int) {

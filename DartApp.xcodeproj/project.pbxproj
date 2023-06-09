@@ -14,9 +14,16 @@
 		E55952252A20AE2C0027C1D3 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55952242A20AE2C0027C1D3 /* BaseView.swift */; };
 		E55952272A20B4020027C1D3 /* PreGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55952262A20B4010027C1D3 /* PreGameView.swift */; };
 		E55952292A20B41A0027C1D3 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55952282A20B41A0027C1D3 /* StatsView.swift */; };
-		E559522B2A20B4260027C1D3 /* PersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E559522A2A20B4260027C1D3 /* PersonView.swift */; };
+		E559522B2A20B4260027C1D3 /* KontoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E559522A2A20B4260027C1D3 /* KontoView.swift */; };
 		E559522E2A20D3A50027C1D3 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E559522D2A20D3A50027C1D3 /* GameView.swift */; };
 		E56EDAF72A210F26006E9741 /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56EDAF62A210F26006E9741 /* GameSettings.swift */; };
+		E56EDAFA2A31F3E9006E9741 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E56EDAF92A31F3E9006E9741 /* FirebaseAuth */; };
+		E56EDAFC2A31F3E9006E9741 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = E56EDAFB2A31F3E9006E9741 /* FirebaseFirestore */; };
+		E56EDAFE2A31F492006E9741 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E56EDAFD2A31F492006E9741 /* GoogleService-Info.plist */; };
+		E56EDB012A3203B3006E9741 /* EingeloggtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56EDB002A3203B3006E9741 /* EingeloggtView.swift */; };
+		E56EDB032A32081F006E9741 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56EDB022A32081F006E9741 /* Stats.swift */; };
+		E56EDB052A32090F006E9741 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56EDB042A32090F006E9741 /* DataManager.swift */; };
+		E56EDB072A333813006E9741 /* SelectedPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56EDB062A333812006E9741 /* SelectedPlayer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,9 +35,14 @@
 		E55952242A20AE2C0027C1D3 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		E55952262A20B4010027C1D3 /* PreGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreGameView.swift; sourceTree = "<group>"; };
 		E55952282A20B41A0027C1D3 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
-		E559522A2A20B4260027C1D3 /* PersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonView.swift; sourceTree = "<group>"; };
+		E559522A2A20B4260027C1D3 /* KontoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KontoView.swift; sourceTree = "<group>"; };
 		E559522D2A20D3A50027C1D3 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		E56EDAF62A210F26006E9741 /* GameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
+		E56EDAFD2A31F492006E9741 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E56EDB002A3203B3006E9741 /* EingeloggtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EingeloggtView.swift; sourceTree = "<group>"; };
+		E56EDB022A32081F006E9741 /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
+		E56EDB042A32090F006E9741 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		E56EDB062A333812006E9741 /* SelectedPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedPlayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +50,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E56EDAFA2A31F3E9006E9741 /* FirebaseAuth in Frameworks */,
+				E56EDAFC2A31F3E9006E9741 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +82,7 @@
 				E55952142A20ADBD0027C1D3 /* DartAppApp.swift */,
 				E55952162A20ADBD0027C1D3 /* ContentView.swift */,
 				E55952182A20ADBD0027C1D3 /* Assets.xcassets */,
+				E56EDAFD2A31F492006E9741 /* GoogleService-Info.plist */,
 				E559521A2A20ADBD0027C1D3 /* Preview Content */,
 			);
 			path = DartApp;
@@ -85,9 +100,9 @@
 			isa = PBXGroup;
 			children = (
 				E55952242A20AE2C0027C1D3 /* BaseView.swift */,
+				E56EDAFF2A320385006E9741 /* Konto etc. */,
 				E559522C2A20D3910027C1D3 /* Game */,
 				E55952282A20B41A0027C1D3 /* StatsView.swift */,
-				E559522A2A20B4260027C1D3 /* PersonView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -95,7 +110,9 @@
 		E55952232A20AE130027C1D3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E56EDB022A32081F006E9741 /* Stats.swift */,
 				E56EDAF62A210F26006E9741 /* GameSettings.swift */,
+				E56EDB062A333812006E9741 /* SelectedPlayer.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -107,6 +124,16 @@
 				E559522D2A20D3A50027C1D3 /* GameView.swift */,
 			);
 			path = Game;
+			sourceTree = "<group>";
+		};
+		E56EDAFF2A320385006E9741 /* Konto etc. */ = {
+			isa = PBXGroup;
+			children = (
+				E559522A2A20B4260027C1D3 /* KontoView.swift */,
+				E56EDB002A3203B3006E9741 /* EingeloggtView.swift */,
+				E56EDB042A32090F006E9741 /* DataManager.swift */,
+			);
+			path = "Konto etc.";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,6 +152,10 @@
 			dependencies = (
 			);
 			name = DartApp;
+			packageProductDependencies = (
+				E56EDAF92A31F3E9006E9741 /* FirebaseAuth */,
+				E56EDAFB2A31F3E9006E9741 /* FirebaseFirestore */,
+			);
 			productName = DartApp;
 			productReference = E55952112A20ADBD0027C1D3 /* DartApp.app */;
 			productType = "com.apple.product-type.application";
@@ -153,6 +184,9 @@
 				Base,
 			);
 			mainGroup = E55952082A20ADBC0027C1D3;
+			packageReferences = (
+				E56EDAF82A31F3E9006E9741 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = E55952122A20ADBD0027C1D3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -169,6 +203,7 @@
 			files = (
 				E559521C2A20ADBD0027C1D3 /* Preview Assets.xcassets in Resources */,
 				E55952192A20ADBD0027C1D3 /* Assets.xcassets in Resources */,
+				E56EDAFE2A31F492006E9741 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,11 +215,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				E56EDAF72A210F26006E9741 /* GameSettings.swift in Sources */,
+				E56EDB072A333813006E9741 /* SelectedPlayer.swift in Sources */,
+				E56EDB032A32081F006E9741 /* Stats.swift in Sources */,
 				E55952272A20B4020027C1D3 /* PreGameView.swift in Sources */,
 				E55952292A20B41A0027C1D3 /* StatsView.swift in Sources */,
 				E55952252A20AE2C0027C1D3 /* BaseView.swift in Sources */,
-				E559522B2A20B4260027C1D3 /* PersonView.swift in Sources */,
+				E559522B2A20B4260027C1D3 /* KontoView.swift in Sources */,
 				E55952172A20ADBD0027C1D3 /* ContentView.swift in Sources */,
+				E56EDB012A3203B3006E9741 /* EingeloggtView.swift in Sources */,
+				E56EDB052A32090F006E9741 /* DataManager.swift in Sources */,
 				E55952152A20ADBD0027C1D3 /* DartAppApp.swift in Sources */,
 				E559522E2A20D3A50027C1D3 /* GameView.swift in Sources */,
 			);
@@ -387,6 +426,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E56EDAF82A31F3E9006E9741 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E56EDAF92A31F3E9006E9741 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E56EDAF82A31F3E9006E9741 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		E56EDAFB2A31F3E9006E9741 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E56EDAF82A31F3E9006E9741 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E55952092A20ADBC0027C1D3 /* Project object */;
 }

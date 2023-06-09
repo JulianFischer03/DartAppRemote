@@ -23,7 +23,7 @@ struct BaseView: View {
             //Tab View
             TabView(selection: $currentTab) {
                 
-                PersonView()
+                KontoView()
                     .modifier(HintergrundModifizierer())
                     .tag("person")
                 
@@ -66,7 +66,7 @@ struct BaseView: View {
                            TabButton(image: "person")
                        }
                        .frame(maxWidth: .infinity, minHeight: 60)
-                       .background(Color("HintergrundLeiste"))
+                       .background(Color(.black))
         
         }
         .edgesIgnoringSafeArea(.bottom)
@@ -84,12 +84,13 @@ struct BaseView: View {
                 .resizable()
                 .renderingMode(.template)
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 25, height: 25)
+                .frame(width: 35, height: 35)
                 .foregroundColor(
                 
-                    currentTab == image ? Color.black :
+                    currentTab == image ? Color.red :
                         Color.gray.opacity(0.95)
                 )
+            
         }
     }
 
