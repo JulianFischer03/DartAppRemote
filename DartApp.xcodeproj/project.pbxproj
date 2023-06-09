@@ -110,6 +110,7 @@
 		E55952232A20AE130027C1D3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E56EDB042A32090F006E9741 /* DataManager.swift */,
 				E56EDB022A32081F006E9741 /* Stats.swift */,
 				E56EDAF62A210F26006E9741 /* GameSettings.swift */,
 				E56EDB062A333812006E9741 /* SelectedPlayer.swift */,
@@ -131,7 +132,6 @@
 			children = (
 				E559522A2A20B4260027C1D3 /* KontoView.swift */,
 				E56EDB002A3203B3006E9741 /* EingeloggtView.swift */,
-				E56EDB042A32090F006E9741 /* DataManager.swift */,
 			);
 			path = "Konto etc.";
 			sourceTree = "<group>";

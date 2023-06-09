@@ -18,6 +18,7 @@ struct KontoView: View {
         
         if userIstEingeloggt {
             EingeloggtView()
+                .environmentObject(DataManager())
         }else {
             content
         }
@@ -125,13 +126,14 @@ struct KontoView: View {
             
         }
     }
-    
 }
 
 struct KontoView_Previews: PreviewProvider {
     static var previews: some View {
         KontoView()
+        .environmentObject(DataManager())
     }
+        
 }
 
 extension View {

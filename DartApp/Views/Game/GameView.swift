@@ -468,5 +468,6 @@ struct GameView_Previews: PreviewProvider {
     static var previews: some View {
         GameView()
             .environmentObject(GameSettings())
+            .environmentObject(SelectedPlayer())
     }
 }
