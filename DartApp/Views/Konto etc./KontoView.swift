@@ -19,6 +19,7 @@ struct KontoView: View {
         if userIstEingeloggt {
             EingeloggtView()
                 .environmentObject(DataManager())
+                .modifier(HintergrundModifizierer())
         }else {
             content
         }

@@ -24,7 +24,7 @@ struct EingeloggtView: View {
                     Text("Abmelden")
                         .padding(.top)
                 }
-                .environmentObject(DataManager())
+                
             }
         }
     }

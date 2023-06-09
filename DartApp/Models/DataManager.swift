@@ -17,7 +17,8 @@ class DataManager: ObservableObject {
     
     func fetchStats() {
         let db = Firestore.firestore()
-        let ref = db.collection("Stats").document("yourPlayerID")
+        let currentUserID = Auth.auth().currentUser?.uid
+        let ref = db.collection("Stats").document(currentUserID!)
         
         ref.getDocument { snapshot, error in
             guard error == nil, let snapshot = snapshot, snapshot.exists else {
@@ -37,20 +38,23 @@ class DataManager: ObservableObject {
 
     
     func saveStatsForUser(playerID: String, hundertAchtziger: Int, doppelQuote: Float, darts: Int) {
-        let db = Firestore.firestore()
-        let statsRef = db.collection("Stats").document(playerID)
-        let data: [String: Any] = [
-            "hundertAchtziger": hundertAchtziger,
-            "doppelQuote": doppelQuote,
-            "darts": darts
-        ]
-
-        statsRef.setData(data) { error in
-            if let error = error {
-                print("Error saving stats: \(error.localizedDescription)")
-            } else {
-                print("Stats saved successfully!")
+        if let currentUserID = Auth.auth().currentUser?.uid {
+            let data: [String: Any] = [
+                "hundertAchtziger": hundertAchtziger,
+                "doppelQuote": doppelQuote,
+                "darts": darts
+            ]
+            let db = Firestore.firestore()
+            let statsCollection = db.collection("Stats")
+            statsCollection.document(currentUserID).setData(data) { error in
+                if let error = error {
+                    print("Error saving stats: \(error.localizedDescription)")
+                } else {
+                    print("Stats saved successfully!")
+                }
             }
+        } else {
+           print("Benutzer nicht angemeldet")
         }
     }
 

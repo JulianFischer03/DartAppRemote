@@ -328,7 +328,6 @@ struct PreGameView: View {
                                 )
                                 .padding(25)
                         }
-                    
                 }
             }// ENDE HSTACK
         }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BaseView: View {
     @StateObject private var gameSettings = GameSettings()
-    @StateObject private var dataManager = DataManager()
+   // @StateObject private var dataManager = DataManager()
     
     @State var currentTab = "person"
     
@@ -26,7 +26,7 @@ struct BaseView: View {
                 
                 KontoView()
                     .modifier(HintergrundModifizierer())
-                    .environmentObject(dataManager)
+                    //.environmentObject(dataManager)
                     .tag("person")
                 
                 PreGameView()
@@ -100,7 +100,6 @@ struct BaseView: View {
 struct BaseView_Previews: PreviewProvider {
     static var previews: some View {
         BaseView()
-            .environmentObject(DataManager())
     }
 }
 

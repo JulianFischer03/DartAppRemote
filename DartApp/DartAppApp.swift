@@ -22,7 +22,6 @@ struct DartAppApp: App {
             ContentView()
                 .environmentObject(dataManager)
                 .environmentObject(SelectedPlayer())
-                .environmentObject(DataManager())
         }
     }
 }
