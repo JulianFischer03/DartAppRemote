@@ -12,18 +12,34 @@ struct KontoView: View {
     
     @State private var email = ""
     @State private var passwort = ""
-    @State private var userIstEingeloggt = false
+    @EnvironmentObject private var dataManager: DataManager
     
     var body: some View {
         
-        if userIstEingeloggt {
-            EingeloggtView()
-                .environmentObject(DataManager())
-                .modifier(HintergrundModifizierer())
+        if dataManager.userIstEingeloggt {
+           contentEingeloggt
         }else {
             content
         }
         
+    }
+    
+    var contentEingeloggt: some View {
+        NavigationView {
+            VStack {
+                Text("Geworfene Darts: \(dataManager.stats.darts)")
+                Text("Geworfene 180s: \(dataManager.stats.hundertAchtziger)")
+                Text("Deine Doppel Quote: \(dataManager.stats.doppelQuote)")
+                
+                Button{
+                    dataManager.logout()
+                }label: {
+                    Text("Abmelden")
+                        .padding(.top)
+                }
+                
+            }
+        }
     }
     
     var content: some View {
@@ -100,7 +116,8 @@ struct KontoView: View {
             .onAppear {
                 Auth.auth().addStateDidChangeListener { auth, user in
                     if user != nil {
-                        userIstEingeloggt.toggle()
+                        dataManager.userIstEingeloggt.toggle()
+                        print(dataManager.userIstEingeloggt)
                     }
                 }
             }
@@ -113,6 +130,8 @@ struct KontoView: View {
             
             if error != nil {
                 print(error!.localizedDescription)
+            } else {
+                dataManager.userIstEingeloggt = true
             }
             
         }
@@ -123,6 +142,8 @@ struct KontoView: View {
             
             if error != nil {
                 print(error!.localizedDescription)
+            } else{
+                dataManager.userIstEingeloggt = true
             }
             
         }
