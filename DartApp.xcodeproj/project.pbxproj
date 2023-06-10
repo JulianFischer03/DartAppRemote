@@ -23,6 +23,7 @@
 		E56EDB032A32081F006E9741 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56EDB022A32081F006E9741 /* Stats.swift */; };
 		E56EDB052A32090F006E9741 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56EDB042A32090F006E9741 /* DataManager.swift */; };
 		E56EDB072A333813006E9741 /* SelectedPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56EDB062A333812006E9741 /* SelectedPlayer.swift */; };
+		E56EDB0A2A3492ED006E9741 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = E56EDB092A3492ED006E9741 /* SwiftUICharts */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E56EDB0A2A3492ED006E9741 /* SwiftUICharts in Frameworks */,
 				E56EDAFA2A31F3E9006E9741 /* FirebaseAuth in Frameworks */,
 				E56EDAFC2A31F3E9006E9741 /* FirebaseFirestore in Frameworks */,
 			);
@@ -152,6 +154,7 @@
 			packageProductDependencies = (
 				E56EDAF92A31F3E9006E9741 /* FirebaseAuth */,
 				E56EDAFB2A31F3E9006E9741 /* FirebaseFirestore */,
+				E56EDB092A3492ED006E9741 /* SwiftUICharts */,
 			);
 			productName = DartApp;
 			productReference = E55952112A20ADBD0027C1D3 /* DartApp.app */;
@@ -183,6 +186,7 @@
 			mainGroup = E55952082A20ADBC0027C1D3;
 			packageReferences = (
 				E56EDAF82A31F3E9006E9741 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				E56EDB082A3492ED006E9741 /* XCRemoteSwiftPackageReference "ChartView" */,
 			);
 			productRefGroup = E55952122A20ADBD0027C1D3 /* Products */;
 			projectDirPath = "";
@@ -432,6 +436,14 @@
 				minimumVersion = 10.0.0;
 			};
 		};
+		E56EDB082A3492ED006E9741 /* XCRemoteSwiftPackageReference "ChartView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AppPear/ChartView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -444,6 +456,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E56EDAF82A31F3E9006E9741 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		E56EDB092A3492ED006E9741 /* SwiftUICharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E56EDB082A3492ED006E9741 /* XCRemoteSwiftPackageReference "ChartView" */;
+			productName = SwiftUICharts;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
