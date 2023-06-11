@@ -12,6 +12,9 @@ struct StatsView: View {
     
     @EnvironmentObject private var dataManager: DataManager
     
+    @State private var selectedOption = 0
+    let options = ["Darts pro Leg", "Option 2", "Option 3"]
+    
     struct dartsProLeg {
         var legNummer: Int
         var dartsProLeg: Int
@@ -32,13 +35,14 @@ struct StatsView: View {
         ZStack{
             
             Color.black
+                .ignoresSafeArea()
             
-        /*    RoundedRectangle(cornerRadius: 30, style: .continuous)
+            RoundedRectangle(cornerRadius: 30, style: .continuous)
                 .foregroundStyle(.linearGradient(colors: [.pink, .red],startPoint:.topLeading, endPoint: .bottomTrailing))
-                .frame(width: 1000, height: 400)
+                .frame(width: 1000, height: 550)
                 .rotationEffect (.degrees (225))
-                .offset (y: -350)
-            */
+               // .offset (y: -350)
+            
                 
             VStack {
                 Text("Hello, Stats!")
@@ -66,19 +70,45 @@ struct StatsView: View {
                     .bold()
                     .padding(10)
                 
-                HStack{
-                    Chart(data, id: \.legNummer) { item in
-                        BarMark(
-                            x: .value("Leg", item.legNummer),
-                            y: .value("darts", item.dartsProLeg)
-                        )
+                VStack{
+                
+                    Picker("Select an option", selection: $selectedOption) {
+                            ForEach(0..<3) { index in       //3 optionen deswegen 0..3
+                                Text(options[index])
+                                
+                            }
+                        }
+                    .pickerStyle(.segmented)
+                    .frame(width: 350)
+                    
+                    if selectedOption == 0 { //Option DartsProLeg
+                        Chart(data, id: \.legNummer) { item in
+                            BarMark(
+                                x: .value("Leg", item.legNummer),
+                                y: .value("darts", item.dartsProLeg)
+                            )
+                        }
+                        .chartXAxis {
+                          AxisMarks(values: .automatic) { _ in
+                              AxisGridLine(centered: true, stroke: StrokeStyle(dash: [0]))
+                              .foregroundStyle(Color.white)
+                            AxisValueLabel()
+                          }
+                        }
+                        .chartYAxis {
+                          AxisMarks(values: .automatic) { _ in
+                            AxisGridLine(centered: true, stroke: StrokeStyle(dash: [0]))
+                              .foregroundStyle(Color.white)
+                            AxisValueLabel()
+                          }
+                        }
+                        .frame(maxWidth: 300, maxHeight: 300)
+                        .foregroundStyle(Color.black.gradient)
                     }
-                    .cornerRadius(20)
-                    .frame(maxWidth: 300, maxHeight: 300)
-                    .foregroundStyle(Color.green.gradient)
-                   // .background(.gray)
+                    Spacer()
                 }
                 .padding()
+                
             }
             
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
