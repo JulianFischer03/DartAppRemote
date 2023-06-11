@@ -39,8 +39,8 @@ struct GameView: View {
     @State private var darts1 = 0
     @State private var darts2 = 0
     
-    @State private var avg1: Array = [0]
-    @State private var avg2: Array = [0]
+    @State private var avg1: [Float] = [0]
+    @State private var avg2: [Float] = [0]
     
     @State private var double1 = 0
     @State private var double2 = 0
@@ -231,8 +231,9 @@ struct GameView: View {
                         if currentPlayerIsOne {
                             let inputScore = Int(inputText)!
                             if inputScore <= score1 {
-                                if inputScore == 180 && selectedPlayer.player1 == "Du" {
-                                    dataManager.incrementHundertAchtziger()
+                                
+                                if selectedPlayer.player1 == "Du" {
+                                    dataManager.dreiDartsGeworfen(inputScore: inputScore)
                                 }
                                 // Gültige Eingabe: Score aktualisieren
                                 if istCheckbar(score1) {
@@ -243,17 +244,22 @@ struct GameView: View {
                                 score1 -= inputScore
                                 letzterWurfSpieler1.append(inputScore)
                                 darts1 += 3
-                                if selectedPlayer.player1 == "Du"{
-                                    dataManager.incrementDarts()
-                                }
                                 let avgNeu = Float((startScore-score1)/darts1*3)
-                                avg1.append(Int(avgNeu))
+                                avg1.append(avgNeu)
                                 
                             } else {    // Ungültige Eingabe: Score ist zu hoch
                                 print("Fehler")
                             }
                             if score1 == 0 {// Score von Spieler 1 ist 0: Präsentationsmodus verwenden, um zur vorherigen Ansicht zurückzukehren
                                 
+                                if selectedPlayer.player1 == "Du" {
+                                    dataManager.legGewonnen(darts: darts1, avg: avg1.last!)
+                                    print(darts1)
+                                }
+                                if selectedPlayer.player2 == "Du" {
+                                    dataManager.legVerloren(avg: avg1.last!)
+                                }
+
                                 legs1 += 1
                                 double1 += 1
                                 score1 = startScore
@@ -264,15 +270,29 @@ struct GameView: View {
                                 letzterWurfSpieler1.append(0)
                                 letzterWurfSpieler2.removeAll()
                                 letzterWurfSpieler2.append(0)
-
                                 
                                 if legs1 == legsToSet {
                                     legs1 = 0
                                     legs2 = 0
                                     sets1 += 1
+                                    
+                                    if selectedPlayer.player1 == "Du" {
+                                        dataManager.setGewonnen()
+                                    }
+                                    if selectedPlayer.player2 == "Du" {
+                                        dataManager.setVerloren()
+                                    }
                                 }
                                 
                                 if sets1 == setsToWin {
+                                    
+                                    if selectedPlayer.player1 == "Du" {
+                                        dataManager.matchGewonnen()
+                                    }
+                                    if selectedPlayer.player2 == "Du" {
+                                        dataManager.matchVerloren()
+                                    }
+                                    
                                     presentationMode.wrappedValue.dismiss() //Gewonnen
                                     showCongratulationsPopup = true         //Gewonnen
                                 }
@@ -284,8 +304,8 @@ struct GameView: View {
                             let inputScore = Int(inputText)!
                             if inputScore <= score2 {
                                 // Gültige Eingabe: Score aktualisieren
-                                if inputScore == 180 && selectedPlayer.player2 == "Du" {
-                                    dataManager.incrementHundertAchtziger()
+                                if selectedPlayer.player2 == "Du" {
+                                    dataManager.dreiDartsGeworfen(inputScore: inputScore)
                                 }
                                 if istCheckbar(score2) {
                                                    showActionSheet = true
@@ -293,18 +313,22 @@ struct GameView: View {
                                 score2 -= inputScore
                                 letzterWurfSpieler2.append(inputScore)
                                 darts2 += 3
-                                if selectedPlayer.player2 == "Du"{
-                                    dataManager.incrementDarts()
-                                }
                                 
                                 let avgNeu = Float((startScore-score2)/darts2*3)
-                                avg2.append(Int(avgNeu))
+                                avg2.append(avgNeu)
                                 
                             } else {    // Ungültige Eingabe: Score ist zu hoch
                                 print("Fehler")
                             }
                         }
                         if score2 == 0 {// Score von Spieler 1 ist 0: Präsentationsmodus verwenden, um zur vorherigen Ansicht zurückzukehren
+                            
+                            if selectedPlayer.player2 == "Du" {
+                                dataManager.legGewonnen(darts: darts2, avg: avg2.last!)
+                            }
+                            if selectedPlayer.player1 == "Du" {
+                                dataManager.legVerloren(avg: avg2.last!)
+                            }
                             
                             legs2 += 1
                             double2 += 1
@@ -321,9 +345,23 @@ struct GameView: View {
                                 legs1 = 0
                                 legs2 = 0
                                 sets2 += 1
+                                
+                                if selectedPlayer.player2 == "Du" {
+                                    dataManager.setGewonnen()
+                                }
+                                if selectedPlayer.player1 == "Du" {
+                                    dataManager.setVerloren()
+                                }
                             }
                             
                             if sets2 == setsToWin {
+                                
+                                if selectedPlayer.player2 == "Du" {
+                                    dataManager.matchGewonnen()
+                                }
+                                if selectedPlayer.player1 == "Du" {
+                                    dataManager.matchVerloren()
+                                }
                                 presentationMode.wrappedValue.dismiss() //Gewonnen
                                 showCongratulationsPopup = true         //Gewonnen
                             }

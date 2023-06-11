@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Charts
 
 struct StatsView: View {
     
@@ -71,6 +72,7 @@ struct StatsView: View {
                                 .fill(Color.green.shadow(.drop(radius: 2)))
                     )
                     .padding(15)
+                    
                     
                     
                 }
