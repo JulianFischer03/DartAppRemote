@@ -64,7 +64,13 @@ struct StatsView: View {
                     .bold()
                     .padding(10)
                 
-                Text(String(format: "Deine gesamte Doppelquote: %.2f", dataManager.stats.doppelQuote))
+                Text(String(format: "Deine gesamte Doppelquote: %.2f", dataManager.stats.avgDoppelQuote))
+                    .font(.body)
+                    .foregroundColor(.white)
+                    .bold()
+                    .padding(10)
+                
+                Text(String(format:"Deine Siegquote: \(dataManager.stats.siegQuote) %"))
                     .font(.body)
                     .foregroundColor(.white)
                     .bold()

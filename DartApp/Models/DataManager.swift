@@ -12,7 +12,7 @@ class DataManager: ObservableObject {
     @Published var userIstEingeloggt = false
     
     init() {
-        stats = Stats(id: "yourPlayerID", hundertAchtziger: 0, hundertVierzigPlus: 0, hundertPlus: 0, sechzigPlus: 0, doppelQuote: 0.0, darts: 0, avgAllTime: 0.0, legsGespielt: 0, legsGewonnen: 0,setsGespielt: 0,setsGewonnen: 0, spieleGespielt: 0, spieleGewonnen: 0, siegQuote: 0.0, dartsProLeg: [0], avgProLeg: [0])
+        stats = Stats(id: "yourPlayerID", hundertAchtziger: 0, hundertVierzigPlus: 0, hundertPlus: 0, sechzigPlus: 0, lastDoppelQuote: [0],avgDoppelQuote: 0.0, darts: 0, avgAllTime: 0.0, legsGespielt: 0, legsGewonnen: 0,setsGespielt: 0,setsGewonnen: 0, spieleGespielt: 0, spieleGewonnen: 0, siegQuote: 0.0, dartsProLeg: [0], avgProLeg: [0])
         fetchStats()
     }
     
@@ -42,7 +42,8 @@ class DataManager: ObservableObject {
             let hundertVierzigPlus = data?["hunderVierzigPlus"] as? Int ?? 0
             let hundertPlus = data?["hunderPlus"] as? Int ?? 0
             let sechzigPlus = data?["sechzigPlus"] as? Int ?? 0
-            let doppelQuote = data?["doppelQuote"] as? Float ?? 0.0
+            let lastDoppelQuote = data?["lastDoppelQuote"] as? [Float] ?? [0.0]
+            let avgDoppelQuote = data?["avgDoppelQuote"] as? Float ?? 0.0
             let darts = data?["darts"] as? Int ?? 0
             let avgAllTime = data?["avgAllTime"] as? Float ?? 0.0
             let legsGespielt = data?["legsGespielt"] as? Int ?? 0
@@ -55,20 +56,21 @@ class DataManager: ObservableObject {
             let dartsProLeg = data?["dartsProLeg"] as? [Int] ?? [0]
             let avgProLeg = data?["avgProLeg"] as? [Float] ?? [0.0]
             
-            self.stats = Stats(id: id, hundertAchtziger: hundertAchtziger, hundertVierzigPlus: hundertVierzigPlus, hundertPlus: hundertPlus, sechzigPlus: sechzigPlus, doppelQuote: doppelQuote, darts: darts, avgAllTime: avgAllTime, legsGespielt: legsGespielt, legsGewonnen: legsGewonnen, setsGespielt: setsGespielt, setsGewonnen: setsGewonnen, spieleGespielt: spieleGespielt, spieleGewonnen: spieleGewonnen, siegQuote: siegQuote, dartsProLeg: dartsProLeg, avgProLeg: avgProLeg)
+            self.stats = Stats(id: id, hundertAchtziger: hundertAchtziger, hundertVierzigPlus: hundertVierzigPlus, hundertPlus: hundertPlus, sechzigPlus: sechzigPlus, lastDoppelQuote: lastDoppelQuote,avgDoppelQuote: avgDoppelQuote, darts: darts, avgAllTime: avgAllTime, legsGespielt: legsGespielt, legsGewonnen: legsGewonnen, setsGespielt: setsGespielt, setsGewonnen: setsGewonnen, spieleGespielt: spieleGespielt, spieleGewonnen: spieleGewonnen, siegQuote: siegQuote, dartsProLeg: dartsProLeg, avgProLeg: avgProLeg)
         }
     }
 
 
     
-    func saveStatsForUser(playerID: String, hundertAchtziger: Int, hundertVierzigPlus: Int, hundertPlus: Int, sechzigPlus: Int ,doppelQuote: Float, darts: Int, avgAllTime: Float, legsGespielt: Int, legsGewonnen: Int,setsGespielt: Int, setsGewonnen: Int, spieleGespielt: Int, spieleGewonnen: Int, siegQuote: Float, dartsProLeg: [Int], avgProLeg: [Float]) {
+    func saveStatsForUser(playerID: String, hundertAchtziger: Int, hundertVierzigPlus: Int, hundertPlus: Int, sechzigPlus: Int ,lastDoppelQuote: [Float],avgDoppelQuote: Float, darts: Int, avgAllTime: Float, legsGespielt: Int, legsGewonnen: Int,setsGespielt: Int, setsGewonnen: Int, spieleGespielt: Int, spieleGewonnen: Int, siegQuote: Float, dartsProLeg: [Int], avgProLeg: [Float]) {
         if let currentUserID = Auth.auth().currentUser?.uid {
             let data: [String: Any] = [
                 "hundertAchtziger": hundertAchtziger,
                 "hundertVierzigPlus": hundertVierzigPlus,
                 "hundertPlus": hundertPlus,
                 "sechzigPlus": sechzigPlus,
-                "doppelQuote": doppelQuote,
+                "lastDoppelQuote": lastDoppelQuote,
+                "avgDoppelQuote": avgDoppelQuote,
                 "darts": darts,
                 "avgAllTime": avgAllTime,
                 "legsGespielt": legsGespielt,
@@ -114,10 +116,11 @@ class DataManager: ObservableObject {
         saveStats()
     }
     
-    func legGewonnen(darts: Int, avg: Float) {
+    func legGewonnen(darts: Int, avg: Float, lastDoppelQuote: Float) {
         stats.legsGespielt += 1
         stats.legsGewonnen += 1
         stats.dartsProLeg.append(darts)
+        stats.lastDoppelQuote.append(lastDoppelQuote)
         stats.avgProLeg.append(avg)
         
         saveStats()
@@ -157,7 +160,12 @@ class DataManager: ObservableObject {
     }
     
     func saveStats() {
-        saveStatsForUser(playerID: stats.id, hundertAchtziger: stats.hundertAchtziger, hundertVierzigPlus: stats.hundertVierzigPlus, hundertPlus: stats.hundertPlus, sechzigPlus: stats.sechzigPlus, doppelQuote: stats.doppelQuote, darts: stats.darts, avgAllTime: stats.avgAllTime, legsGespielt: stats.legsGespielt, legsGewonnen: stats.legsGewonnen, setsGespielt: stats.setsGespielt, setsGewonnen: stats.setsGewonnen, spieleGespielt: stats.spieleGespielt, spieleGewonnen: stats.spieleGewonnen, siegQuote: stats.siegQuote, dartsProLeg: stats.dartsProLeg, avgProLeg: stats.avgProLeg)
+        
+        stats.siegQuote = Float(stats.spieleGewonnen) / Float(stats.spieleGespielt) * 100
+        stats.avgDoppelQuote = stats.lastDoppelQuote.reduce(0, +) / Float(stats.lastDoppelQuote.count) * 100
+
+        
+        saveStatsForUser(playerID: stats.id, hundertAchtziger: stats.hundertAchtziger, hundertVierzigPlus: stats.hundertVierzigPlus, hundertPlus: stats.hundertPlus, sechzigPlus: stats.sechzigPlus, lastDoppelQuote: stats.lastDoppelQuote, avgDoppelQuote: stats.avgDoppelQuote, darts: stats.darts, avgAllTime: stats.avgAllTime, legsGespielt: stats.legsGespielt, legsGewonnen: stats.legsGewonnen, setsGespielt: stats.setsGespielt, setsGewonnen: stats.setsGewonnen, spieleGespielt: stats.spieleGespielt, spieleGewonnen: stats.spieleGewonnen, siegQuote: stats.siegQuote, dartsProLeg: stats.dartsProLeg, avgProLeg: stats.avgProLeg)
     }
     
     func logout() {

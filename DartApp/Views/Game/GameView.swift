@@ -50,7 +50,8 @@ struct GameView: View {
     
     @State private var showCongratulationsPopup = false
     
-    @State private var showActionSheet = false
+    @State private var showActionSheet1 = false
+    @State private var showActionSheet2 = false
     @State private var selectedOption: Int = -1
     
     let keyboardButtons = [
@@ -113,8 +114,11 @@ struct GameView: View {
                     
                     Text("Darts: " + String(darts1))
                     
-                  //  Text("Double:   \(double1)" + "/" + String(würfeAufDoppel1))
-                    
+                    if würfeAufDoppel1 != 0{
+                        Text("Double: " + String(double1/würfeAufDoppel1))
+                    } else{
+                        Text("Double: " + "0.0")
+                    }
                 }
                 .padding(.horizontal, 10)
                 .padding(.vertical, 4)
@@ -152,7 +156,11 @@ struct GameView: View {
                     
                     Text("Darts: " + String(darts2))
                     
-                   // Text("Double: " + String(double2) + "/" + String(würfeAufDoppel2))
+                    if würfeAufDoppel2 != 0{
+                        Text("Double: " + String(double2/würfeAufDoppel2))
+                    } else{
+                        Text("Double: " + "0.0")
+                    }
                     
                 }
                 .padding(.horizontal, 10)
@@ -237,7 +245,7 @@ struct GameView: View {
                                 }
                                 // Gültige Eingabe: Score aktualisieren
                                 if istCheckbar(score1) {
-                                                   showActionSheet = true
+                                                   showActionSheet1 = true
                                                }
                                 
                                 
@@ -252,16 +260,18 @@ struct GameView: View {
                             }
                             if score1 == 0 {// Score von Spieler 1 ist 0: Präsentationsmodus verwenden, um zur vorherigen Ansicht zurückzukehren
                                 
-                                if selectedPlayer.player1 == "Du" {
-                                    dataManager.legGewonnen(darts: darts1, avg: avg1.last!)
-                                    print(darts1)
+                                legs1 += 1
+                                double1 += 1
+                                
+                                if selectedPlayer.player1 == "Du" && gameSettings.punkteHöhe >= 501 {   //Daten nur bei Spiel ab 501
+                                    dataManager.legGewonnen(darts: darts1, avg: avg1.last!, lastDoppelQuote: Float(double1/würfeAufDoppel1))
+                                    
                                 }
-                                if selectedPlayer.player2 == "Du" {
+                                if selectedPlayer.player2 == "Du" && gameSettings.punkteHöhe >= 501 {
                                     dataManager.legVerloren(avg: avg1.last!)
                                 }
 
-                                legs1 += 1
-                                double1 += 1
+                                
                                 score1 = startScore
                                 score2 = startScore
                                 darts1 = 0
@@ -308,7 +318,7 @@ struct GameView: View {
                                     dataManager.dreiDartsGeworfen(inputScore: inputScore)
                                 }
                                 if istCheckbar(score2) {
-                                                   showActionSheet = true
+                                                   showActionSheet2 = true
                                                }
                                 score2 -= inputScore
                                 letzterWurfSpieler2.append(inputScore)
@@ -321,17 +331,19 @@ struct GameView: View {
                                 print("Fehler")
                             }
                         }
-                        if score2 == 0 {// Score von Spieler 1 ist 0: Präsentationsmodus verwenden, um zur vorherigen Ansicht zurückzukehren
-                            
-                            if selectedPlayer.player2 == "Du" {
-                                dataManager.legGewonnen(darts: darts2, avg: avg2.last!)
-                            }
-                            if selectedPlayer.player1 == "Du" {
-                                dataManager.legVerloren(avg: avg2.last!)
-                            }
+                        if score2 == 0 {// Score von Spieler 2 ist 0: Präsentationsmodus verwenden, um zur vorherigen Ansicht zurückzukehren
                             
                             legs2 += 1
                             double2 += 1
+                            
+                            if selectedPlayer.player2 == "Du" && gameSettings.punkteHöhe >= 501 {
+                                dataManager.legGewonnen(darts: darts2, avg: avg2.last!, lastDoppelQuote: Float(double2/würfeAufDoppel2))
+                            }
+                            if selectedPlayer.player1 == "Du" && gameSettings.punkteHöhe >= 501 {
+                                dataManager.legVerloren(avg: avg2.last!)
+                            }
+                            
+                            
                             score1 = startScore
                             score2 = startScore
                             darts1 = 0
@@ -382,14 +394,26 @@ struct GameView: View {
                 }
                 .padding(.horizontal, 17)
 
-                .actionSheet(isPresented: $showActionSheet) {
+                .actionSheet(isPresented: $showActionSheet1) {
                             ActionSheet(
                                 title: Text("Wie viele Würfe aufs Doppel?"),
                                 buttons: [
-                                    .default(Text("0"), action: {handleOptionSelected(0)}),
-                                    .default(Text("1"), action: { handleOptionSelected(1)}),
-                                    .default(Text("2"), action: {handleOptionSelected(2)}),
-                                    .default(Text("3"), action: { handleOptionSelected(3)}),
+                                    .default(Text("0"), action: {handleOptionSelected1(0)}),
+                                    .default(Text("1"), action: {handleOptionSelected1(1)}),
+                                    .default(Text("2"), action: {handleOptionSelected1(2)}),
+                                    .default(Text("3"), action: {handleOptionSelected1(3)}),
+                                    .cancel()
+                                ]
+                            )
+                        }
+                .actionSheet(isPresented: $showActionSheet2) {
+                            ActionSheet(
+                                title: Text("Wie viele Würfe aufs Doppel?"),
+                                buttons: [
+                                    .default(Text("0"), action: {handleOptionSelected2(0)}),
+                                    .default(Text("1"), action: {handleOptionSelected2(1)}),
+                                    .default(Text("2"), action: {handleOptionSelected2(2)}),
+                                    .default(Text("3"), action: {handleOptionSelected2(3)}),
                                     .cancel()
                                 ]
                             )
@@ -481,11 +505,16 @@ struct GameView: View {
         }
     }
     
-    private func handleOptionSelected(_ option: Int) {
+    private func handleOptionSelected1(_ option: Int) {
             selectedOption = option
-            if option == 0 || option == 1 {
+            if option == 0 || option == 1 || option == 2 || option == 3 {
                 würfeAufDoppel1 = option
-            } else if option == 2 || option == 3 {
+            }
+        }
+    
+    private func handleOptionSelected2(_ option: Int) {
+            selectedOption = option
+            if option == 0 || option == 1 || option == 2 || option == 3 {
                 würfeAufDoppel2 = option
             }
         }

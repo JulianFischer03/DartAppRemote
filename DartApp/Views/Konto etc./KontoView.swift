@@ -29,7 +29,7 @@ struct KontoView: View {
             VStack {
                 Text("Geworfene Darts: \(dataManager.stats.darts)")
                 Text("Geworfene 180s: \(dataManager.stats.hundertAchtziger)")
-                Text("Deine Doppel Quote: \(dataManager.stats.doppelQuote)")
+                Text("Deine Doppel Quote: \(dataManager.stats.avgDoppelQuote)")
                 
                 Button{
                     dataManager.logout()

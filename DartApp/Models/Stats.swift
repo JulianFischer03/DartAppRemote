@@ -15,7 +15,8 @@ struct Stats: Identifiable {
     var hundertVierzigPlus: Int
     var hundertPlus: Int
     var sechzigPlus: Int
-    var doppelQuote: Float
+    var lastDoppelQuote: [Float]
+    var avgDoppelQuote: Float
     var darts: Int
     var avgAllTime: Float
     var legsGespielt: Int
