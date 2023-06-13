@@ -99,10 +99,10 @@
 		E55952222A20AE0D0027C1D3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E5B8A1552A3861200094F2F8 /* Stats */,
 				E55952242A20AE2C0027C1D3 /* BaseView.swift */,
 				E56EDAFF2A320385006E9741 /* Konto etc. */,
 				E559522C2A20D3910027C1D3 /* Game */,
-				E55952282A20B41A0027C1D3 /* StatsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -133,6 +133,14 @@
 				E559522A2A20B4260027C1D3 /* KontoView.swift */,
 			);
 			path = "Konto etc.";
+			sourceTree = "<group>";
+		};
+		E5B8A1552A3861200094F2F8 /* Stats */ = {
+			isa = PBXGroup;
+			children = (
+				E55952282A20B41A0027C1D3 /* StatsView.swift */,
+			);
+			path = Stats;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

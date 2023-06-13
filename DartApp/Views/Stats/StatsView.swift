@@ -13,22 +13,48 @@ struct StatsView: View {
     @EnvironmentObject private var dataManager: DataManager
     
     @State private var selectedOption = 0
-    let options = ["Darts pro Leg", "Option 2", "Option 3"]
+    let options = ["Darts pro Leg", "Doppelquote", "Avg. Pro Leg"]
     
     struct dartsProLeg {
         var legNummer: Int
         var dartsProLeg: Int
     }
-
-    var data: [dartsProLeg] {
-            var dataArray: [dartsProLeg] = []
+    var data1: [dartsProLeg] {
+            var dataArray1: [dartsProLeg] = []
             for (index, darts) in dataManager.stats.dartsProLeg.enumerated() {
                 let item = dartsProLeg(legNummer: index, dartsProLeg: darts)
-                dataArray.append(item)
+                dataArray1.append(item)
             }
-            return dataArray
+            return dataArray1
         }
    
+    struct doppelQuoteProMatch {
+        var matchNummer: Int
+        var doppelQuoteProMatch: Float
+    }
+    var data2: [doppelQuoteProMatch] {
+            var dataArray2: [doppelQuoteProMatch] = []
+            for (index, quote) in dataManager.stats.lastDoppelQuote.enumerated() {
+                let item = doppelQuoteProMatch(matchNummer: index, doppelQuoteProMatch: quote)
+                dataArray2.append(item)
+            }
+            return dataArray2
+        }
+    
+    struct avgProLeg {
+        var legNummer: Int
+        var avgProLeg: Float
+    }
+    var data3: [avgProLeg] {
+            var dataArray3: [avgProLeg] = []
+            for (index, avg) in dataManager.stats.avgProLeg.enumerated() {
+                let item = avgProLeg(legNummer: index, avgProLeg: avg)
+                dataArray3.append(item)
+            }
+            return dataArray3
+        }
+    
+    
     
     var body: some View {
         
@@ -74,7 +100,6 @@ struct StatsView: View {
                     .font(.body)
                     .foregroundColor(.white)
                     .bold()
-                    .padding(10)
                 
                 VStack{
                 
@@ -86,12 +111,14 @@ struct StatsView: View {
                         }
                     .pickerStyle(.segmented)
                     .frame(width: 350)
+                    .padding(.bottom,15)
+                    
                     
                     if selectedOption == 0 { //Option DartsProLeg
-                        Chart(data, id: \.legNummer) { item in
+                        Chart(data1, id: \.legNummer) { item in
                             BarMark(
                                 x: .value("Leg", item.legNummer),
-                                y: .value("darts", item.dartsProLeg)
+                                y: .value("Darts", item.dartsProLeg)
                             )
                         }
                         .chartXAxis {
@@ -111,6 +138,56 @@ struct StatsView: View {
                         .frame(maxWidth: 300, maxHeight: 300)
                         .foregroundStyle(Color.black.gradient)
                     }
+                    if selectedOption == 1 {
+                        Chart(data2, id: \.matchNummer) { item in
+                            BarMark(
+                                x: .value("Match", item.matchNummer),
+                                y: .value("Quote", item.doppelQuoteProMatch)
+                            )
+                        }
+                        .chartXAxis {
+                          AxisMarks(values: .automatic) { _ in
+                              AxisGridLine(centered: true, stroke: StrokeStyle(dash: [0]))
+                              .foregroundStyle(Color.white)
+                            AxisValueLabel()
+                          }
+                        }
+                        .chartYAxis {
+                          AxisMarks(values: .automatic) { _ in
+                            AxisGridLine(centered: true, stroke: StrokeStyle(dash: [0]))
+                              .foregroundStyle(Color.white)
+                            AxisValueLabel()
+                          }
+                        }
+                        .frame(maxWidth: 300, maxHeight: 300)
+                        .foregroundStyle(Color.black.gradient)
+                    }
+                    
+                    if selectedOption == 2 {            //avg pro Leg
+                        Chart(data3, id: \.legNummer) { item in
+                            BarMark(
+                                x: .value("Leg", item.legNummer),
+                                y: .value("Avg", item.avgProLeg)
+                            )
+                        }
+                        .chartXAxis {
+                          AxisMarks(values: .automatic) { _ in
+                              AxisGridLine(centered: true, stroke: StrokeStyle(dash: [0]))
+                              .foregroundStyle(Color.white)
+                            AxisValueLabel()
+                          }
+                        }
+                        .chartYAxis {
+                          AxisMarks(values: .automatic) { _ in
+                            AxisGridLine(centered: true, stroke: StrokeStyle(dash: [0]))
+                              .foregroundStyle(Color.white)
+                            AxisValueLabel()
+                          }
+                        }
+                        .frame(maxWidth: 300, maxHeight: 300)
+                        .foregroundStyle(Color.black.gradient)
+                    }
+                    
                     Spacer()
                 }
                 .padding()

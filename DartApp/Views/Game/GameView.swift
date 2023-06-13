@@ -50,8 +50,7 @@ struct GameView: View {
     
     @State private var showCongratulationsPopup = false
     
-    @State private var showActionSheet1 = false
-    @State private var showActionSheet2 = false
+    @State private var showActionSheet = false
     @State private var selectedOption: Int = -1
     
     let keyboardButtons = [
@@ -237,7 +236,7 @@ struct GameView: View {
                     Button(action: {
                         // Aktion für die Bestätigungstaste
                         if currentPlayerIsOne {
-                            let inputScore = Int(inputText)!
+                            let inputScore = Int(inputText) ?? 0
                             if inputScore <= score1 {
                                 
                                 if selectedPlayer.player1 == "Du" {
@@ -245,9 +244,8 @@ struct GameView: View {
                                 }
                                 // Gültige Eingabe: Score aktualisieren
                                 if istCheckbar(score1) {
-                                                   showActionSheet1 = true
+                                                   showActionSheet = true
                                                }
-                                
                                 
                                 score1 -= inputScore
                                 letzterWurfSpieler1.append(inputScore)
@@ -264,7 +262,7 @@ struct GameView: View {
                                 double1 += 1
                                 
                                 if selectedPlayer.player1 == "Du" && gameSettings.punkteHöhe >= 501 {   //Daten nur bei Spiel ab 501
-                                    dataManager.legGewonnen(darts: darts1, avg: avg1.last!, lastDoppelQuote: Float(double1/würfeAufDoppel1))
+                                    dataManager.legGewonnen(darts: darts1, avg: avg1.last!, lastDoppelQuote: Float(double1) / Float(würfeAufDoppel1) * 100)
                                     
                                 }
                                 if selectedPlayer.player2 == "Du" && gameSettings.punkteHöhe >= 501 {
@@ -311,14 +309,14 @@ struct GameView: View {
                             
                             
                         } else {    // Ähnliche Logik für Spieler 2
-                            let inputScore = Int(inputText)!
+                            let inputScore = Int(inputText) ?? 0
                             if inputScore <= score2 {
                                 // Gültige Eingabe: Score aktualisieren
                                 if selectedPlayer.player2 == "Du" {
                                     dataManager.dreiDartsGeworfen(inputScore: inputScore)
                                 }
                                 if istCheckbar(score2) {
-                                                   showActionSheet2 = true
+                                                   showActionSheet = true
                                                }
                                 score2 -= inputScore
                                 letzterWurfSpieler2.append(inputScore)
@@ -337,21 +335,11 @@ struct GameView: View {
                             double2 += 1
                             
                             if selectedPlayer.player2 == "Du" && gameSettings.punkteHöhe >= 501 {
-                                dataManager.legGewonnen(darts: darts2, avg: avg2.last!, lastDoppelQuote: Float(double2/würfeAufDoppel2))
+                                dataManager.legGewonnen(darts: darts2, avg: avg2.last!, lastDoppelQuote: Float(double2) / Float(würfeAufDoppel2) * 100)
                             }
                             if selectedPlayer.player1 == "Du" && gameSettings.punkteHöhe >= 501 {
                                 dataManager.legVerloren(avg: avg2.last!)
                             }
-                            
-                            
-                            score1 = startScore
-                            score2 = startScore
-                            darts1 = 0
-                            darts2 = 0
-                            letzterWurfSpieler1.removeAll()
-                            letzterWurfSpieler1.append(0)
-                            letzterWurfSpieler2.removeAll()
-                            letzterWurfSpieler2.append(0)
                             
                             if legs2 == legsToSet {
                                 legs1 = 0
@@ -366,6 +354,15 @@ struct GameView: View {
                                 }
                             }
                             
+                            score1 = startScore
+                            score2 = startScore
+                            darts1 = 0
+                            darts2 = 0
+                            letzterWurfSpieler1.removeAll()
+                            letzterWurfSpieler1.append(0)
+                            letzterWurfSpieler2.removeAll()
+                            letzterWurfSpieler2.append(0)
+                            
                             if sets2 == setsToWin {
                                 
                                 if selectedPlayer.player2 == "Du" {
@@ -374,9 +371,14 @@ struct GameView: View {
                                 if selectedPlayer.player1 == "Du" {
                                     dataManager.matchVerloren()
                                 }
-                                presentationMode.wrappedValue.dismiss() //Gewonnen
+                                
+                                
+                                showActionSheet = true // Showactionsheet wird nicht angezeigt bzw. erst das spiel geschlossen bevor man doppel eingeben kann
+                                
                                 showCongratulationsPopup = true         //Gewonnen
+                                presentationMode.wrappedValue.dismiss() //Gewonnen
                             }
+                            
                         }
 
                         inputText = ""
@@ -394,30 +396,19 @@ struct GameView: View {
                 }
                 .padding(.horizontal, 17)
 
-                .actionSheet(isPresented: $showActionSheet1) {
+                .actionSheet(isPresented: $showActionSheet) {
                             ActionSheet(
                                 title: Text("Wie viele Würfe aufs Doppel?"),
                                 buttons: [
-                                    .default(Text("0"), action: {handleOptionSelected1(0)}),
-                                    .default(Text("1"), action: {handleOptionSelected1(1)}),
-                                    .default(Text("2"), action: {handleOptionSelected1(2)}),
-                                    .default(Text("3"), action: {handleOptionSelected1(3)}),
+                                    .default(Text("0"), action: {handleOptionSelected(0)}),
+                                    .default(Text("1"), action: {handleOptionSelected(1)}),
+                                    .default(Text("2"), action: {handleOptionSelected(2)}),
+                                    .default(Text("3"), action: {handleOptionSelected(3)}),
                                     .cancel()
                                 ]
                             )
                         }
-                .actionSheet(isPresented: $showActionSheet2) {
-                            ActionSheet(
-                                title: Text("Wie viele Würfe aufs Doppel?"),
-                                buttons: [
-                                    .default(Text("0"), action: {handleOptionSelected2(0)}),
-                                    .default(Text("1"), action: {handleOptionSelected2(1)}),
-                                    .default(Text("2"), action: {handleOptionSelected2(2)}),
-                                    .default(Text("3"), action: {handleOptionSelected2(3)}),
-                                    .cancel()
-                                ]
-                            )
-                        }
+                
                 .alert(isPresented: Binding<Bool>(
                             get: { selectedOption != -1 },
                             set: { _ in selectedOption = -1 }
@@ -437,9 +428,10 @@ struct GameView: View {
                         }
                 
                 
-                .alert(isPresented: $showCongratulationsPopup) {
-                    Alert(title: Text("Glückwunsch!"), message: Text("Spieler \(currentPlayerIsOne ? 1 : 2) hat gewonnen."), dismissButton: .default(Text("OK")))
+                .alert(isPresented: $showCongratulationsPopup) { //currentPlayer auch hier verdreht kp wieso
+                    Alert(title: Text("Glückwunsch!"), message: Text("Spieler \(currentPlayerIsOne ? 2 : 1) hat gewonnen."), dismissButton: .default(Text("OK")))
                 }
+                
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: 10) {
                     ForEach(keyboardButtons, id: \.self) { row in
                         ForEach(row, id: \.self) { number in
@@ -505,19 +497,24 @@ struct GameView: View {
         }
     }
     
-    private func handleOptionSelected1(_ option: Int) {
-            selectedOption = option
+    private func handleOptionSelected(_ option: Int) {
+        selectedOption = option
+        
+        if currentPlayerIsOne{              //Kp wieso das reversed ist, aber so passt es
             if option == 0 || option == 1 || option == 2 || option == 3 {
-                würfeAufDoppel1 = option
+                würfeAufDoppel2 += option
+            }
+        } else{
+            if option == 0 || option == 1 || option == 2 || option == 3 {
+                würfeAufDoppel1 += option
             }
         }
+    }
     
-    private func handleOptionSelected2(_ option: Int) {
-            selectedOption = option
-            if option == 0 || option == 1 || option == 2 || option == 3 {
-                würfeAufDoppel2 = option
-            }
-        }
+    private func showGameGewonnenPopUp() {
+        showCongratulationsPopup = true         //Gewonnen
+        presentationMode.wrappedValue.dismiss() //Gewonnen
+    }
     
     private func istCheckbar(_ score: Int) -> Bool {
         

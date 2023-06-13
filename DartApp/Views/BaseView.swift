@@ -26,7 +26,6 @@ struct BaseView: View {
                 
                 KontoView()
                     .modifier(HintergrundModifizierer())
-                    //.environmentObject(dataManager)
                     .tag("person")
                 
                 PreGameView()
@@ -57,8 +56,7 @@ struct BaseView: View {
                         .tag("dart")
                         .background(
                             Circle()
-                                .fill(Color("Rot"))
-                                .frame(width: 70, height: 70)
+                                .foregroundStyle(.linearGradient(colors: [.pink, .red],startPoint:.topLeading, endPoint: .bottomTrailing))     .frame(width: 70, height: 70)
                                 .shadow(color: Color("Rot").opacity(0.15), radius: 5, x: 0, y: 8)
                         )
                 }

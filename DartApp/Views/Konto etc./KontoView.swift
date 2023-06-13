@@ -55,7 +55,7 @@ struct KontoView: View {
             
             VStack(spacing: 20) {
                 Text("Welcome")
-                    .foregroundColor(.black)
+                    .foregroundColor(.white)
                     .font(.system(size: 40, weight: .bold, design: .rounded))
                     .offset (x: -100, y: -100)
                 

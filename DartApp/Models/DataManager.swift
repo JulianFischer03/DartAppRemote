@@ -162,7 +162,7 @@ class DataManager: ObservableObject {
     func saveStats() {
         
         stats.siegQuote = Float(stats.spieleGewonnen) / Float(stats.spieleGespielt) * 100
-        stats.avgDoppelQuote = stats.lastDoppelQuote.reduce(0, +) / Float(stats.lastDoppelQuote.count) * 100
+        stats.avgDoppelQuote = stats.lastDoppelQuote.reduce(1, +) / Float(stats.lastDoppelQuote.count)
 
         
         saveStatsForUser(playerID: stats.id, hundertAchtziger: stats.hundertAchtziger, hundertVierzigPlus: stats.hundertVierzigPlus, hundertPlus: stats.hundertPlus, sechzigPlus: stats.sechzigPlus, lastDoppelQuote: stats.lastDoppelQuote, avgDoppelQuote: stats.avgDoppelQuote, darts: stats.darts, avgAllTime: stats.avgAllTime, legsGespielt: stats.legsGespielt, legsGewonnen: stats.legsGewonnen, setsGespielt: stats.setsGespielt, setsGewonnen: stats.setsGewonnen, spieleGespielt: stats.spieleGespielt, spieleGewonnen: stats.spieleGewonnen, siegQuote: stats.siegQuote, dartsProLeg: stats.dartsProLeg, avgProLeg: stats.avgProLeg)
