@@ -25,8 +25,9 @@ struct BaseView: View {
             TabView(selection: $currentTab) {
                 
                 KontoView()
+                    .environmentObject(gameSettings)
                     .modifier(HintergrundModifizierer())
-                    .tag("person")
+                    .tag("personNeu")
                 
                 PreGameView()
                     .environmentObject(gameSettings)
@@ -34,40 +35,43 @@ struct BaseView: View {
                     .tag("dart")
                 
                 StatsView()
+                    .environmentObject(gameSettings)
                     .modifier(HintergrundModifizierer())
-                    .tag("graph")
+                    .tag("graphNeu")
             
             }
             
-            HStack(spacing: 80) {
-                
-                TabButton(image: "graph")
-                          
-                           
-                Button {
-                    currentTab = "dart"
-                } label: {
-                    Image("dart")
-                        .resizable()
-                        .frame(width: 50, height: 50)
-                        .font(.system(size: 40, weight: .bold))
-                        .foregroundColor(.white)
-                        .padding(16)
-                        .tag("dart")
-                        .background(
-                            Circle()
-                                .foregroundStyle(.linearGradient(colors: [.pink, .red],startPoint:.topLeading, endPoint: .bottomTrailing))     .frame(width: 70, height: 70)
-                                .shadow(color: Color("Rot").opacity(0.15), radius: 5, x: 0, y: 8)
-                        )
+            if gameSettings.leisteUnten{
+                HStack(spacing: 80) {
+                    
+                    TabButton(image: "graphNeu")
+                        .offset(x:40)
+                    
+                    Button {
+                        currentTab = "dart"
+                    } label: {
+                        Image("DartXAppIcon")
+                            .resizable()
+                            .frame(width: 75, height: 75)
+                            .font(.system(size: 40, weight: .bold))
+                            .foregroundColor(.white)
+                            .padding(16)
+                            .tag("dart")
+                            .background(
+                                Circle()
+                                    .foregroundStyle(.linearGradient(colors: [.pink, .red],startPoint:.topLeading, endPoint: .bottomTrailing))     .frame(width: 70, height: 70)
+                                    .shadow(color: Color("Rot").opacity(0.15), radius: 5, x: 0, y: 8)
+                            )
+                    }
+                    .offset(y: -30)
+                    
+                    
+                    TabButton(image: "personNeu")
+                        .offset(x:-40)
                 }
-                .offset(y: -30)
-                                
-                           
-                TabButton(image: "person")
+                .frame(maxWidth: .infinity, minHeight: 60)
+                .background(Color(.black))
             }
-            .frame(maxWidth: .infinity, minHeight: 60)
-            .background(Color(.black))
-                       
         }
         .edgesIgnoringSafeArea(.bottom)
     }
@@ -84,7 +88,7 @@ struct BaseView: View {
                 .resizable()
                 .renderingMode(.template)
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 35, height: 35)
+                .frame(width: 65, height: 65)
                 .foregroundColor(
                 
                     currentTab == image ? Color.red :
@@ -98,6 +102,8 @@ struct BaseView: View {
 struct BaseView_Previews: PreviewProvider {
     static var previews: some View {
         BaseView()
+            .environmentObject(GameSettings())
+            .environmentObject(DataManager())
     }
 }
 

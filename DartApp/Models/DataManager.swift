@@ -39,8 +39,8 @@ class DataManager: ObservableObject {
             let data = snapshot.data()
             let id = currentUserID
             let hundertAchtziger = data?["hundertAchtziger"] as? Int ?? 0
-            let hundertVierzigPlus = data?["hunderVierzigPlus"] as? Int ?? 0
-            let hundertPlus = data?["hunderPlus"] as? Int ?? 0
+            let hundertVierzigPlus = data?["hundertVierzigPlus"] as? Int ?? 0
+            let hundertPlus = data?["hundertPlus"] as? Int ?? 0
             let sechzigPlus = data?["sechzigPlus"] as? Int ?? 0
             let lastDoppelQuote = data?["lastDoppelQuote"] as? [Float] ?? [0.0]
             let avgDoppelQuote = data?["avgDoppelQuote"] as? Float ?? 0.0
@@ -163,6 +163,7 @@ class DataManager: ObservableObject {
         
         stats.siegQuote = Float(stats.spieleGewonnen) / Float(stats.spieleGespielt) * 100
         stats.avgDoppelQuote = stats.lastDoppelQuote.reduce(1, +) / Float(stats.lastDoppelQuote.count)
+        stats.avgAllTime = stats.avgProLeg.reduce(1, +) / Float(stats.avgProLeg.count)
 
         
         saveStatsForUser(playerID: stats.id, hundertAchtziger: stats.hundertAchtziger, hundertVierzigPlus: stats.hundertVierzigPlus, hundertPlus: stats.hundertPlus, sechzigPlus: stats.sechzigPlus, lastDoppelQuote: stats.lastDoppelQuote, avgDoppelQuote: stats.avgDoppelQuote, darts: stats.darts, avgAllTime: stats.avgAllTime, legsGespielt: stats.legsGespielt, legsGewonnen: stats.legsGewonnen, setsGespielt: stats.setsGespielt, setsGewonnen: stats.setsGewonnen, spieleGespielt: stats.spieleGespielt, spieleGewonnen: stats.spieleGewonnen, siegQuote: stats.siegQuote, dartsProLeg: stats.dartsProLeg, avgProLeg: stats.avgProLeg)

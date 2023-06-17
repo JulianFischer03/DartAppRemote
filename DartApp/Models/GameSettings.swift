@@ -9,6 +9,10 @@ class GameSettings: ObservableObject {
     @Published var spielArt: Int = 1 //1 = Best Of ,  2 = First To
     // Weitere Eigenschaften hier
     
+    
+    
+    @Published var leisteUnten = true
+    @Published var showGame = false
    
 }
 

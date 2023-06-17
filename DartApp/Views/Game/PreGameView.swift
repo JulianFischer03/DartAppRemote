@@ -233,6 +233,7 @@ struct PreGameView: View {
                     
                     HStack{
                         Button(action: {
+                           
                             gameSettings.spielArt = 1
                             selectedButtonBestFirst = 1
                         }) {
@@ -248,6 +249,7 @@ struct PreGameView: View {
                         
                         
                         Button(action: {
+                            gameSettings.leisteUnten = false
                             gameSettings.spielArt = 2
                             selectedButtonBestFirst = 2
                         }) {
@@ -325,6 +327,7 @@ struct PreGameView: View {
                     
                     VStack{
                         NavigationLink(destination: GameView()) {
+                            
                             Text("Game On")
                             .font(.system(size: 25, weight: .bold, design: .rounded))
                             .frame(width: 250, height: 55)

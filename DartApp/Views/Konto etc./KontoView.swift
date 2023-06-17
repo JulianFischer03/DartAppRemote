@@ -19,23 +19,137 @@ struct KontoView: View {
         if dataManager.userIstEingeloggt {
            contentEingeloggt
         }else {
-            content
+            contentEingeloggt
         }
         
     }
     
     var contentEingeloggt: some View {
-        NavigationView {
-            VStack {
-                Text("Geworfene Darts: \(dataManager.stats.darts)")
-                Text("Geworfene 180s: \(dataManager.stats.hundertAchtziger)")
-                Text("Deine Doppel Quote: \(dataManager.stats.avgDoppelQuote)")
+        NavigationView{
+            
+            ZStack{
+                Color.black
+                    .ignoresSafeArea()
+                RoundedRectangle(cornerRadius: 30, style: .continuous)
+                    .foregroundStyle(.linearGradient(colors: [.pink, .red],startPoint:.topLeading, endPoint: .bottomTrailing))
+                    .frame(width: 1100, height: 450)
+                    .rotationEffect (.degrees (135))
+                    .offset (y: -350)
                 
-                Button{
-                    dataManager.logout()
-                }label: {
-                    Text("Abmelden")
-                        .padding(.top)
+                
+                VStack{
+                    Text("Profil")
+                        .foregroundColor(.white)
+                        .font(.system(size: 40, weight: .bold, design: .rounded))
+                        .padding(.top, 50)
+                    
+                    HStack{
+                        Circle()
+                            .fill(.white)
+                            .frame(width: 70, height: 70)
+                            .shadow(color: .black.opacity(0.3), radius: 5, x: 0, y: 8)
+                        
+                        VStack{
+                            Text("Richtiger Name")
+                                .foregroundColor(.white)
+                                .font(.system(size: 30, weight: .bold, design: .rounded))
+                            
+                            Text("Benutzername")
+                                .foregroundColor(.white)
+                                .font(.system(size: 20, weight: .bold, design: .rounded))
+                            
+                        }
+                    }
+                    .padding(.bottom)
+                    .padding(.horizontal)
+                    
+                    HStack{
+                        NavigationLink(destination: QRCodeView()){
+                            Image("qrCode")
+                                .resizable()
+                                .frame(width: 50,height: 50)
+                            Text("QR-Code")
+                                .foregroundColor(.black)
+                                .font(.system(size: 20, weight: .bold, design: .rounded))
+                            
+                        }
+                    }
+                    .frame(width: 370, height: 50)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .fill(.white)
+                    )
+                    .padding()
+                    
+                    HStack{
+                        NavigationLink(destination:FreundeView()){
+                            Image("freunde")
+                                .resizable()
+                                .frame(width: 50,height: 50)
+                            
+                            Text("Freunde")
+                                .foregroundColor(.black)
+                                .font(.system(size: 20, weight: .bold, design: .rounded))
+                        }
+                    }
+                    .frame(width: 370, height: 50)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .fill(.white)
+                    )
+                    .padding()
+                    
+                    HStack{
+                        NavigationLink(destination: BadgeView()){
+                            Image("badge1")
+                                .resizable()
+                                .frame(width: 50,height: 50)
+                            Text("Rank")
+                                .foregroundColor(.black)
+                                .font(.system(size: 20, weight: .bold, design: .rounded))
+                        }
+                    }
+                    .frame(width: 370, height: 50)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .fill(.white)
+                    )
+                    .padding()
+                    
+                    HStack{
+                        NavigationLink(destination: SettingsView()){
+                            Image("settings")
+                                .resizable()
+                                .frame(width: 50,height: 50)
+                            Text("Einstellungen")
+                                .foregroundColor(.black)
+                                .font(.system(size: 20, weight: .bold, design: .rounded))
+                        }
+                    }
+                    .frame(width: 370, height: 50)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .fill(.white)
+                    )
+                    .padding()
+                    
+                    HStack{
+                        Button{
+                            dataManager.logout()
+                        }label:{
+                            Text("Abmelden")
+                                .font(.system(size: 20, weight: .bold, design: .rounded))
+                                .frame(width: 200, height: 50)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                        .fill(.white)
+                                )
+                            
+                        }
+                        .padding()
+                        .padding(.bottom, 50)
+                    }
+                    
                 }
                 
             }
@@ -117,7 +231,6 @@ struct KontoView: View {
                 Auth.auth().addStateDidChangeListener { auth, user in
                     if user != nil {
                         dataManager.userIstEingeloggt.toggle()
-                        print(dataManager.userIstEingeloggt)
                     }
                 }
             }

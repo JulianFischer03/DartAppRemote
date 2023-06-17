@@ -24,6 +24,10 @@
 		E56EDB052A32090F006E9741 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56EDB042A32090F006E9741 /* DataManager.swift */; };
 		E56EDB072A333813006E9741 /* SelectedPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56EDB062A333812006E9741 /* SelectedPlayer.swift */; };
 		E56EDB0A2A3492ED006E9741 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = E56EDB092A3492ED006E9741 /* SwiftUICharts */; };
+		E5B8A1572A3C93C50094F2F8 /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B8A1562A3C93C50094F2F8 /* QRCodeView.swift */; };
+		E5B8A1592A3C94510094F2F8 /* FreundeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B8A1582A3C94510094F2F8 /* FreundeView.swift */; };
+		E5B8A15D2A3C96D30094F2F8 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B8A15C2A3C96D30094F2F8 /* SettingsView.swift */; };
+		E5B8A15F2A3C97100094F2F8 /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B8A15E2A3C97100094F2F8 /* BadgeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +46,10 @@
 		E56EDB022A32081F006E9741 /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
 		E56EDB042A32090F006E9741 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		E56EDB062A333812006E9741 /* SelectedPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedPlayer.swift; sourceTree = "<group>"; };
+		E5B8A1562A3C93C50094F2F8 /* QRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
+		E5B8A1582A3C94510094F2F8 /* FreundeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreundeView.swift; sourceTree = "<group>"; };
+		E5B8A15C2A3C96D30094F2F8 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		E5B8A15E2A3C97100094F2F8 /* BadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,8 +107,8 @@
 		E55952222A20AE0D0027C1D3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E5B8A1552A3861200094F2F8 /* Stats */,
 				E55952242A20AE2C0027C1D3 /* BaseView.swift */,
+				E5B8A1552A3861200094F2F8 /* Stats */,
 				E56EDAFF2A320385006E9741 /* Konto etc. */,
 				E559522C2A20D3910027C1D3 /* Game */,
 			);
@@ -131,6 +139,10 @@
 			isa = PBXGroup;
 			children = (
 				E559522A2A20B4260027C1D3 /* KontoView.swift */,
+				E5B8A1562A3C93C50094F2F8 /* QRCodeView.swift */,
+				E5B8A1582A3C94510094F2F8 /* FreundeView.swift */,
+				E5B8A15C2A3C96D30094F2F8 /* SettingsView.swift */,
+				E5B8A15E2A3C97100094F2F8 /* BadgeView.swift */,
 			);
 			path = "Konto etc.";
 			sourceTree = "<group>";
@@ -223,11 +235,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5B8A15D2A3C96D30094F2F8 /* SettingsView.swift in Sources */,
+				E5B8A1572A3C93C50094F2F8 /* QRCodeView.swift in Sources */,
 				E56EDAF72A210F26006E9741 /* GameSettings.swift in Sources */,
 				E56EDB072A333813006E9741 /* SelectedPlayer.swift in Sources */,
 				E56EDB032A32081F006E9741 /* Stats.swift in Sources */,
+				E5B8A1592A3C94510094F2F8 /* FreundeView.swift in Sources */,
 				E55952272A20B4020027C1D3 /* PreGameView.swift in Sources */,
 				E55952292A20B41A0027C1D3 /* StatsView.swift in Sources */,
+				E5B8A15F2A3C97100094F2F8 /* BadgeView.swift in Sources */,
 				E55952252A20AE2C0027C1D3 /* BaseView.swift in Sources */,
 				E559522B2A20B4260027C1D3 /* KontoView.swift in Sources */,
 				E55952172A20ADBD0027C1D3 /* ContentView.swift in Sources */,
@@ -365,11 +381,14 @@
 				DEVELOPMENT_TEAM = 92656DM38F;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = DartX;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -394,11 +413,14 @@
 				DEVELOPMENT_TEAM = 92656DM38F;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = DartX;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
