@@ -17,16 +17,7 @@ struct BadgeView: View {
     
     var body: some View {
         
-    /*    let hundertAchtziger: Int = dataManager.stats.hundertAchtziger
-        if hundertAchtziger > 0 &&  hundertAchtziger < 10 {
-            progress180 = 1
-        } else if hundertAchtziger < 100 {
-            progress180 = 2
-        } else if hundertAchtziger > 100 {
-            progress180 = 3
-        }
-       
-        return*/ ZStack{
+        ZStack{
             
             Color.black
                 .ignoresSafeArea()
@@ -56,14 +47,16 @@ struct BadgeView: View {
                 )
                 
                 VStack{ //Rahmen für einzelne Badge Kategorien
+                    
+                    BadgeCategoryView(title: "Darts", badgeImages: ["badge1", "badge1", "badge1"], progress: progressDarts, nextBadgeArr: ["250", "1000", "10000"])
+                    
+                    
                     BadgeCategoryView(title: "180er",  badgeImages: ["badge1", "badge1", "badge1"], progress: progress180 ,nextBadgeArr: ["1-180er" , "10-180er" , "100-180er"])
                     
                     
-
-                    BadgeCategoryView(title: "Doppelmeister", badgeImages: ["badge1", "badge1", "badge1"], progress: progressDouble, nextBadgeArr: ["25%", "50%", "75%"])
+                    BadgeCategoryView(title: "Doppelmeister", badgeImages: ["badge1", "badge1", "badge1"], progress: progressDouble, nextBadgeArr: ["10%", "25%", "50%"])
                     
-                    BadgeCategoryView(title: "Darts", badgeImages: ["badge1", "badge1", "badge1"], progress: progressDarts, nextBadgeArr: ["250", "1000", "10000"])
-
+                   
                     
                 }
                 
@@ -72,7 +65,37 @@ struct BadgeView: View {
                 .padding()
             }
         }
+        .onAppear{
+            let hundertAchtziger: Int = dataManager.stats.hundertAchtziger
+            if hundertAchtziger > 0 &&  hundertAchtziger < 10 {
+                progress180 = 1
+            } else if hundertAchtziger < 100 {
+                progress180 = 2
+            } else if hundertAchtziger > 100 {
+                progress180 = 3
+            }
+            
+            let doppelQuote: Float = dataManager.stats.avgDoppelQuote
+            print(doppelQuote)
+            if doppelQuote >= 10 && doppelQuote < 25{
+                progressDouble = 1
+            } else if doppelQuote >= 25 && doppelQuote < 50 {
+                progressDouble = 2
+            } else if doppelQuote > 50 {
+                progressDouble = 3
+            }
+            
+            let darts: Int = dataManager.stats.darts
+            if darts >= 250 && darts < 1000 {
+                progressDarts = 1
+            } else if darts >= 1000 && darts < 10000{
+                progressDarts = 2
+            } else if darts >= 10000 {
+                progressDarts = 3
+            }
+        }
     }
+        
 }
 
 struct BadgeCategoryView: View {

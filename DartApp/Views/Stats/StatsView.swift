@@ -355,7 +355,8 @@ struct StatsView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             }
         .onAppear(){
-                gameSettings.leisteUnten = true
+            gameSettings.leisteUnten = true
+            dataManager.saveStats()
         }
     }
         
