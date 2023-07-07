@@ -75,11 +75,12 @@ struct GameView: View {
     var body: some View {
         
         ZStack{
-           Color.black
+           
+            Color.black
                 .ignoresSafeArea()
             
             RoundedRectangle(cornerRadius: 30, style: .continuous)
-                .foregroundStyle(.linearGradient(colors: [Color("Rot2"), Color("Rot3")],startPoint:.topLeading, endPoint: .bottomTrailing))
+                .foregroundStyle(.linearGradient(colors: [.red, .pink],startPoint:.topLeading, endPoint: .bottomTrailing))
                 .frame(width: 1000, height: 570)
                 .rotationEffect (.degrees (225))
                 .offset (y: 10)
@@ -597,6 +598,7 @@ struct GameView: View {
                 }
                 .padding()
             }
+            
             .onAppear(){
                 gameSettings.leisteUnten = false
             }
@@ -604,6 +606,7 @@ struct GameView: View {
                 gameSettings.leisteUnten = true
             }
         }
+        
     }
     
     func getLoggedInUserID() -> String? {

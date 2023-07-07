@@ -64,12 +64,10 @@ struct StatsView: View {
         
         ZStack{
             
-            Color.black
-                .ignoresSafeArea()
-            
+          
             RoundedRectangle(cornerRadius: 30, style: .continuous)
                 .foregroundStyle(.linearGradient(colors: [.red, .pink],startPoint:.topLeading, endPoint: .bottomTrailing))
-                .frame(width: 1000, height: 600)
+                .frame(width: 1000, height: 500)
                 .rotationEffect (.degrees (225))
                 .offset (y: 20)
             
@@ -354,6 +352,7 @@ struct StatsView: View {
             
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             }
+        .background(.linearGradient(colors: [.black, .red],startPoint:.topLeading, endPoint: .bottomTrailing))
         .onAppear(){
             gameSettings.leisteUnten = true
             dataManager.saveStats()

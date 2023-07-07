@@ -34,7 +34,7 @@ struct KontoView: View {
                     .foregroundStyle(.linearGradient(colors: [.pink, .red],startPoint:.topLeading, endPoint: .bottomTrailing))
                     .frame(width: 1100, height: 450)
                     .rotationEffect (.degrees (135))
-                    .offset (y: -350)
+                    .offset (y: -340)
                 
                 
                 VStack{
