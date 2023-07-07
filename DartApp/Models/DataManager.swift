@@ -97,30 +97,11 @@ class DataManager: ObservableObject {
         }
     }
     
-    func dreiDartsGeworfen(inputScore: Int) {
-        stats.darts += 3
-        
-        if inputScore == 180 {
-            stats.hundertAchtziger += 1
-        }
-        if inputScore >= 140 {
-            stats.hundertVierzigPlus += 1
-        }
-        if inputScore >= 100 {
-            stats.hundertPlus += 1
-        }
-        if inputScore >= 60 {
-            stats.sechzigPlus += 1
-        }
-        
-        saveStats()
-    }
     
-    func legGewonnen(darts: Int, avg: Float, lastDoppelQuote: Float) {
+    func legGewonnen(darts: Int, avg: Float) {
         stats.legsGespielt += 1
         stats.legsGewonnen += 1
         stats.dartsProLeg.append(darts)
-        stats.lastDoppelQuote.append(lastDoppelQuote)
         stats.avgProLeg.append(avg)
         
         saveStats()
@@ -162,8 +143,9 @@ class DataManager: ObservableObject {
     func saveStats() {
         
         stats.siegQuote = Float(stats.spieleGewonnen) / Float(stats.spieleGespielt) * 100
-        stats.avgDoppelQuote = stats.lastDoppelQuote.reduce(1, +) / Float(stats.lastDoppelQuote.count)
-        stats.avgAllTime = stats.avgProLeg.reduce(1, +) / Float(stats.avgProLeg.count)
+        stats.avgDoppelQuote = stats.lastDoppelQuote.reduce(1, +) / (Float(stats.lastDoppelQuote.count)-1)
+        stats.avgAllTime = stats.avgProLeg.reduce(1, +) / (Float(stats.avgProLeg.count)-1)
+        stats.darts = stats.dartsProLeg.reduce(0, +)
 
         
         saveStatsForUser(playerID: stats.id, hundertAchtziger: stats.hundertAchtziger, hundertVierzigPlus: stats.hundertVierzigPlus, hundertPlus: stats.hundertPlus, sechzigPlus: stats.sechzigPlus, lastDoppelQuote: stats.lastDoppelQuote, avgDoppelQuote: stats.avgDoppelQuote, darts: stats.darts, avgAllTime: stats.avgAllTime, legsGespielt: stats.legsGespielt, legsGewonnen: stats.legsGewonnen, setsGespielt: stats.setsGespielt, setsGewonnen: stats.setsGewonnen, spieleGespielt: stats.spieleGespielt, spieleGewonnen: stats.spieleGewonnen, siegQuote: stats.siegQuote, dartsProLeg: stats.dartsProLeg, avgProLeg: stats.avgProLeg)

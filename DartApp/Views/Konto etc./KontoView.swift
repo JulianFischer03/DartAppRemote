@@ -19,7 +19,7 @@ struct KontoView: View {
         if dataManager.userIstEingeloggt {
            contentEingeloggt
         }else {
-            contentEingeloggt
+            content
         }
         
     }

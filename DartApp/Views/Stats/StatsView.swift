@@ -155,7 +155,9 @@ struct StatsView: View {
                     case 1:
                         
                         HStack{
-                            Text("Doppel Quote: \(dataManager.stats.avgDoppelQuote)")
+                            let avgDoppelQuote = dataManager.stats.avgDoppelQuote
+                            let formattedText = String(format: "Doppel Quote: %.2f", avgDoppelQuote)
+                            Text(formattedText)
                                 .font(.system(size: 18, weight: .bold, design: .rounded))
                                 .frame(width: 180, height: 40)
                                 .background(
@@ -164,7 +166,9 @@ struct StatsView: View {
                                 )
                                 .foregroundColor(.black)
                             
-                            Text("Dein Avg.: \(dataManager.stats.avgAllTime)")
+                            let avgAllTime = dataManager.stats.avgAllTime
+                            let formattedText1 = String(format: "Dein Avg.: %.2f", avgAllTime)
+                            Text(formattedText1)
                                 .font(.system(size: 18, weight: .bold, design: .rounded))
                                 .frame(width: 180, height: 40)
                                 .background(
@@ -175,7 +179,9 @@ struct StatsView: View {
                         }
                     case 2:
                         
-                        Text("Sieg Quote: \(dataManager.stats.siegQuote)")
+                        let siegQuote = dataManager.stats.siegQuote
+                        let formattedText2 = String(format: "Sieg Quote: %.2f%%", siegQuote)
+                        Text(formattedText2)
                             .font(.system(size: 18, weight: .bold, design: .rounded))
                             .frame(width: 370, height: 40)
                             .background(

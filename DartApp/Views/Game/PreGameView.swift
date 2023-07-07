@@ -34,7 +34,7 @@ struct PreGameView: View {
                     .ignoresSafeArea()
                 
                 RoundedRectangle(cornerRadius: 30, style: .continuous)
-                    .foregroundStyle(.linearGradient(colors: [Color("Rot2"), Color("Rot3")],startPoint:.topLeading, endPoint: .bottomTrailing))
+                    .foregroundStyle(.linearGradient(colors: [.pink, .red],startPoint:.topLeading, endPoint: .bottomTrailing))
                     .frame(width: 1000, height: 570)
                     .rotationEffect (.degrees (225))
                     .offset (y: 10)
